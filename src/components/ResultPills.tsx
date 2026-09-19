@@ -66,7 +66,7 @@ function Pill({ item, index: i, run, announce, saved }: PillProps) {
   return (
     <li
       key={`${run}-${item.key}`}
-      class={`pill-in flex items-center gap-1 rounded-full border border-accent/20 py-1.5 pl-4 pr-1.5 ${i % 2 ? 'bg-pill-b' : 'bg-pill-a'}`}
+      class={`pill-in flex max-w-full items-center gap-0.5 sm:gap-1 rounded-3xl border border-accent/20 py-1.5 pl-3.5 pr-1 sm:py-1.5 sm:pl-4 sm:pr-1.5 ${i % 2 ? 'bg-pill-b' : 'bg-pill-a'}`}
       style={{ animation: `pill-in .35s ease-out ${Math.min(i, 20) * 35}ms both` }}
       title={item.title}
     >
@@ -86,7 +86,7 @@ function Pill({ item, index: i, run, announce, saved }: PillProps) {
           <button
             type="button" key={c.label} onClick={() => onCopy(c.value, `${item.key}|${c.label}`)}
             aria-label={`Copy ${c.label.toLowerCase()} version of ${item.label}`}
-            class="inline-flex min-h-9 items-center gap-1 rounded-full px-2.5 text-xs font-medium text-accent-dark hover:bg-white/70"
+            class="inline-flex min-h-8 shrink-0 items-center gap-1 whitespace-nowrap rounded-full px-2 text-xs font-medium text-accent-dark hover:bg-white/70 sm:min-h-9 sm:px-2.5"
           >
             {copied === `${item.key}|${c.label}` ? <Check size={14} strokeWidth={1.75} aria-hidden="true" /> : <Copy size={14} strokeWidth={1.75} aria-hidden="true" />}
             {c.label}
@@ -95,32 +95,32 @@ function Pill({ item, index: i, run, announce, saved }: PillProps) {
       ) : (
         <button
           type="button" onClick={() => onCopy()} aria-label={`Copy ${item.copy}`}
-          class="flex size-9 items-center justify-center rounded-full text-accent-dark hover:bg-white/70"
+          class="flex size-8 shrink-0 items-center justify-center rounded-full text-accent-dark hover:bg-white/70 sm:size-9"
         >
-          {copied === item.key ? <Check size={16} strokeWidth={1.75} aria-hidden="true" /> : <Copy size={16} strokeWidth={1.75} aria-hidden="true" />}
+          {copied === item.key ? <Check size={16} strokeWidth={1.75} aria-hidden="true" class="size-3.5 sm:size-4" /> : <Copy size={16} strokeWidth={1.75} aria-hidden="true" class="size-3.5 sm:size-4" />}
         </button>
       )}
       {speechOk && (
         <button
           type="button" onClick={onListen} aria-label={`Hear ${item.label} spoken aloud`}
-          class={`flex size-9 items-center justify-center rounded-full text-accent-dark hover:bg-white/70 ${speaking ? 'bg-white/80' : ''}`}
+          class={`flex size-8 shrink-0 items-center justify-center rounded-full text-accent-dark hover:bg-white/70 sm:size-9 ${speaking ? 'bg-white/80' : ''}`}
         >
-          <Volume2 size={16} strokeWidth={1.75} aria-hidden="true" class={speaking ? 'motion-safe:animate-pulse' : ''} />
+          <Volume2 size={16} strokeWidth={1.75} aria-hidden="true" class={`size-3.5 sm:size-4 ${speaking ? 'motion-safe:animate-pulse' : ''}`} />
         </button>
       )}
       {saved.available && (
         <button
           type="button" onClick={onSave} aria-pressed={isSaved}
           aria-label={isSaved ? `Remove ${item.label} from saved` : `Save ${item.label}`}
-          class="flex size-9 items-center justify-center rounded-full text-accent-dark hover:bg-white/70"
+          class="flex size-8 shrink-0 items-center justify-center rounded-full text-accent-dark hover:bg-white/70 sm:size-9"
         >
-          <Bookmark size={16} strokeWidth={1.75} fill={isSaved ? 'currentColor' : 'none'} aria-hidden="true" />
+          <Bookmark size={16} strokeWidth={1.75} fill={isSaved ? 'currentColor' : 'none'} aria-hidden="true" class="size-3.5 sm:size-4" />
         </button>
       )}
       {item.link && (
         <a
           href={item.link.href} target="_blank" rel={item.link.rel} aria-label={item.link.ariaLabel}
-          class="mr-0.5 inline-flex min-h-9 items-center gap-1 rounded-full px-2.5 text-xs font-medium text-accent-dark hover:bg-white/70"
+          class="mr-0.5 inline-flex min-h-8 shrink-0 items-center gap-1 whitespace-nowrap rounded-full px-2 text-xs font-medium text-accent-dark hover:bg-white/70 sm:min-h-9 sm:px-2.5"
         >
           {item.link.icon === 'external' ? <ExternalLink size={14} strokeWidth={1.75} aria-hidden="true" /> : <Globe size={14} strokeWidth={1.75} aria-hidden="true" />}
           {item.link.label}

@@ -146,7 +146,7 @@ export default function CombinerTool() {
           </div>
         </div>
 
-        <button type="submit" class="btn-primary mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full px-8 text-base font-medium focus-visible:outline-offset-4 sm:w-auto">
+        <button type="submit" class="btn-primary mt-6 inline-flex w-full items-center justify-center rounded-full font-medium focus-visible:outline-offset-4 sm:w-auto">
           <ButtonLabel icon={Combine}>Combine names</ButtonLabel>
         </button>
       </form>

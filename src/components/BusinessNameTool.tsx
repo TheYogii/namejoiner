@@ -97,7 +97,7 @@ export default function BusinessNameTool() {
         </div>
         <p id="word-help" class="mt-3 text-sm text-ink-soft">One word per box: an industry keyword, a quality word, a product idea or a founder’s name.</p>
 
-        <button type="submit" class="btn-primary mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full px-8 text-base font-medium focus-visible:outline-offset-4 sm:w-auto">
+        <button type="submit" class="btn-primary mt-6 inline-flex w-full items-center justify-center rounded-full font-medium focus-visible:outline-offset-4 sm:w-auto">
           <ButtonLabel icon={WandSparkles}>Generate names</ButtonLabel>
         </button>
       </form>
