@@ -1,0 +1,225 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolThemeWrapper from '../components/ToolThemeWrapper.astro';
+import RelatedToolCard from '../components/RelatedToolCard.astro';
+import GamertagTool from '../components/GamertagTool';
+import { Gamepad2 } from '@lucide/astro';
+import { toolBySlug } from '../data/tools';
+
+const title = 'Gamertag Generator That Fits Xbox, PlayStation and More';
+const description =
+  'Free gamertag generator for Xbox, PlayStation, Steam, Minecraft and Roblox. Get cool, funny or chill names that fit your platform. No signup.';
+const path = '/gamertag-generator';
+const url = `https://namejoiner.com${path}`;
+
+const faqs = [
+  {
+    q: 'What is a gamertag?',
+    a: 'A gamertag is the name other players see when you play online, on your profile, in friend lists and in voice chat. Xbox popularized the word, and PlayStation, Roblox and Minecraft each have their own version with different length and character rules. A good one is short, easy to say aloud and not tied to personal details.',
+  },
+  {
+    q: 'Does this work for Xbox, PlayStation, Steam, Minecraft and Roblox?',
+    a: 'Yes. Choose your platform in the Platform section and the tool enforces that platform’s length and character limits, so an Xbox result is never longer than 12 characters and never contains an underscore. Each result also lists every platform it fits, which is handy if you want one name everywhere. Leave the choice on Any to see names for all of them.',
+  },
+  {
+    q: 'Can I check whether a gamertag is already taken?',
+    a: 'No, this tool cannot see the platforms’ databases, so a name may already be in use. Search for it in the Xbox, PlayStation, Roblox or Minecraft account screen before you get attached. Xbox will add a number suffix if your first choice is taken, so it is worth trying a couple of variations.',
+  },
+  {
+    q: 'Is an AI making up these gamertags?',
+    a: 'No. Fixed rules combine your word with hand-picked gaming word lists, adding a prefix, a suffix, an underscore or a spelling twist, and then rank the results by how easy they are to say. Outside Random, the same input gives the same list, and hovering over any gamertag names the technique that made it.',
+  },
+  {
+    q: 'Is there a catch, or do I need an account or to pay?',
+    a: 'There is no catch: it is free, needs no account or email address, and has no limit on how many names you generate. The word you type stays on your device because everything runs in your browser. If you also need a name for social media, our Username Generator handles Instagram, TikTok, Snapchat and X.',
+  },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'NameJoiner Gamertag Generator',
+    url,
+    description:
+      'A free online gamertag generator that turns a name or word into competitive, chill or fantasy gaming usernames for Xbox, PlayStation, Steam, Minecraft and Roblox, applying each platform’s length and character limits and showing which platforms every result fits.',
+    applicationCategory: 'GameApplication',
+    operatingSystem: 'Any (runs in a web browser)',
+    browserRequirements: 'Requires JavaScript',
+    isAccessibleForFree: true,
+    inLanguage: 'en',
+    dateModified: '2026-09-18',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+
+const related = [
+  { slug: 'username-generator', line: 'Cute, aesthetic and unique usernames for TikTok, Instagram and more.' },
+  { slug: 'couple-name-combiner', line: 'Blend two names into a duo name for you and your co-op partner.' },
+  { slug: 'business-name-generator', line: 'Name a clan, a team or a streaming channel by combining two words.' },
+]
+  .map((r) => ({ ...r, tool: toolBySlug(r.slug) }))
+  .filter((r) => r.tool.built); // unbuilt tools reappear here once built
+---
+<BaseLayout {title} {description} {path} theme="gamertag" {schema} ogImageAlt="Gamertag Generator by NameJoiner: create a cool gaming username">
+  <ToolThemeWrapper theme="gamertag">
+    <div class="mx-auto max-w-6xl px-4 pb-8 pt-12 sm:px-6 sm:pt-16">
+
+      <header>
+        <p class="inline-flex items-center gap-2 rounded-full bg-pill-a px-3 py-1 text-sm font-medium text-accent-dark">
+          <Gamepad2 size={14} strokeWidth={1.75} aria-hidden="true" /> Free gamertag generator
+        </p>
+        <h1 class="mt-4">The Gamertag Generator for cool names that fit your platform</h1>
+        <div class="prose-body mt-5 text-lg">
+          <p>
+            Type a name or a favorite word and this gamertag generator turns it into gaming usernames you can copy in one click. Choose Competitive for cool, sharp names, Chill for cozy ones, or Fantasy for names out of myth and legend, and enter a silly word if you want funny gamertag ideas. Pick a platform (Xbox, PlayStation, Steam, Minecraft, Roblox or Any) and the tool enforces its length and character limits, then marks every result with the platforms it fits.
+          </p>
+          <p>
+            It runs on hand-picked word lists and simple combining rules, not AI. Looking for a name for Instagram or TikTok instead? Try the <a href="/username-generator">Username Generator</a>.
+          </p>
+        </div>
+      </header>
+
+      <section class="mt-10" aria-label="Gamertag generator tool">
+        <GamertagTool client:visible />
+      </section>
+
+      <article class="prose-body mt-16 space-y-14">
+
+        <section aria-labelledby="how">
+          <h2 id="how" class="mb-4">Under the hood: where gamertags come from</h2>
+          <p>This is rule-based word combination, not AI. We wrote the gaming word lists by hand, and a small set of rules combines them with your word. That makes it instant, keeps everything in your browser, and means there is no black box: hover over any result to see the technique behind it.</p>
+          <h3 class="mb-2 mt-6">The techniques</h3>
+          <p>Your word is cleaned to lowercase letters, and a long name also gets a short form, so “christopher” can become “chris”. The tool then tries a word before your name (turboluna), a word after it (lunaslayer), a pairing with an underscore (luna_viper), a short number tail (luna07) and, in Competitive and Fantasy, spelling twists such as reversed syllables, so Luna becomes Nalu.</p>
+          <h3 class="mb-2 mt-6">The styles</h3>
+          <p>Each style has its own lists. Competitive uses words like viper, storm and blitz, Chill uses lofi, otter and toast, and Fantasy uses ember, rune and raven. Random mixes all three and changes each time you click, while the other styles give the same results for the same input. None of the lists use the names of real games or brands.</p>
+          <h3 class="mb-2 mt-6">Ranking</h3>
+          <p>Every candidate is scored on how easy it is to say, since teammates will be calling it out in voice chat. Shorter names score higher because platforms cap length, and the list rotates through techniques so you do not get twenty near-copies. A short blocklist removes rude combinations. If you pick a platform, its length and character limits are applied first, and its usual habits decide which kinds of name come first. What it cannot do is check whether a name is taken, because that needs the platform itself.</p>
+        </section>
+
+        <section aria-labelledby="competitive">
+          <h2 id="competitive" class="mb-4">Cool and competitive gamertags</h2>
+          <p>A competitive gamertag reads fast and hits hard. Short, sharp words like viper, blitz and storm work because they are quick to say in a hectic match, and they look clean in a scoreboard. Enter “Luna” and the Competitive style gives names like turboluna, lunaslayer and luna_viper. For cool gamertag ideas, that style is the one to start with.</p>
+          <p>A few tips help the name stay cool rather than try-hard. Use one strong word, not two. Be wary of number tails: 07 or 13 look tidy, but long strings of digits look like a default name. And say it out loud before you commit, because a name that is awkward to shout will not survive a busy voice chat.</p>
+        </section>
+
+        <section aria-labelledby="chill">
+          <h2 id="chill" class="mb-4">Chill and cozy gamertags</h2>
+          <p>Not every player wants to sound intimidating. Cozy games, farming sims and relaxed co-op lobbies suit softer names, and the Chill style leans on words like lofi, pixel, moss and toast. From “Luna” you will see cozyluna, lunabear and luna_pixel.</p>
+          <p>Chill names tend to be friendlier to other players too, which matters in games where you chat with strangers. They also age well: a name built on a small, gentle word rarely feels dated in a few years, unlike a name built on a trend.</p>
+        </section>
+
+        <section aria-labelledby="fantasy">
+          <h2 id="fantasy" class="mb-4">Fantasy gamertags</h2>
+          <p>Role-playing games, survival worlds and anything with dragons call for a name that sounds like it belongs in the setting. The Fantasy style mixes words from myth and legend, such as ember, frost, rune, wyrm and raven, with endings like -blade, -born and -ward. Luna becomes emberluna, lunablade or luna_dragon.</p>
+          <p>Try the spelling twists here too, since reversed syllables and swapped letters give a name an invented feel without turning it into unreadable letters. Keep the name pronounceable, though. A fantasy name that nobody can say tends to get shortened to something else by your teammates.</p>
+        </section>
+
+        <section aria-labelledby="funny">
+          <h2 id="funny" class="mb-4">Funny gamertag ideas</h2>
+          <p>There is no separate Funny style, but the tool is good at funny gamertag ideas if you feed it the right word. Most funny names come from contrast: something harmless and everyday wearing an intimidating title. So use a silly word as your starting word, then pick the Competitive style. “Toast” gives toastslayer, toast_viper and turbotoast, and “Noodle” gives noodlefury and noodleviper.</p>
+          <p>Food, household objects and small animals work best. A useful test is whether the name still makes you smile the third time you read it. Puns that depend on a joke can wear thin quickly. If you want funny but gentle, the Chill style with the same word gives softer results like cozytoast or lofinoodle.</p>
+        </section>
+
+        <section aria-labelledby="platforms">
+          <h2 id="platforms" class="mb-4">Choosing a gamertag for your platform</h2>
+          <p>Every platform has its own length limit and its own idea of which characters are allowed, so a name that works on one can be rejected on another. Pick a platform in the tool and it enforces these limits for you, then marks each result with every platform it fits. Whether you want an Xbox gamertag generator, a Roblox username generator or a Minecraft name generator, the rules are below.</p>
+
+          <div class="mt-6 overflow-x-auto rounded-[12px] border border-line bg-white">
+            <table class="w-full min-w-[34rem] border-collapse text-left text-sm">
+              <caption class="sr-only">Gamertag length and character rules by platform</caption>
+              <thead class="bg-paper text-ink">
+                <tr>
+                  <th scope="col" class="px-4 py-3 font-semibold">Platform</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">Length</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">Characters</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">Worth knowing</th>
+                </tr>
+              </thead>
+              <tbody class="text-ink-soft">
+                <tr class="border-t border-line"><th scope="row" class="px-4 py-3 font-semibold text-ink">Xbox</th><td class="px-4 py-3">Up to 12</td><td class="px-4 py-3">Letters and numbers</td><td class="px-4 py-3">A number suffix is added if the name is taken</td></tr>
+                <tr class="border-t border-line"><th scope="row" class="px-4 py-3 font-semibold text-ink">PlayStation</th><td class="px-4 py-3">3 to 16</td><td class="px-4 py-3">Letters, numbers, hyphens, underscores</td><td class="px-4 py-3">Must start with a letter</td></tr>
+                <tr class="border-t border-line"><th scope="row" class="px-4 py-3 font-semibold text-ink">Steam</th><td class="px-4 py-3">Up to 32</td><td class="px-4 py-3">Almost anything</td><td class="px-4 py-3">The profile name is separate from the login account name</td></tr>
+                <tr class="border-t border-line"><th scope="row" class="px-4 py-3 font-semibold text-ink">Minecraft (Java)</th><td class="px-4 py-3">3 to 16</td><td class="px-4 py-3">Letters, numbers, underscores</td><td class="px-4 py-3">Bedrock uses your Xbox gamertag</td></tr>
+                <tr class="border-t border-line"><th scope="row" class="px-4 py-3 font-semibold text-ink">Roblox</th><td class="px-4 py-3">3 to 20</td><td class="px-4 py-3">Letters, numbers, one underscore</td><td class="px-4 py-3">No underscore at the start or end</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-3 text-sm">These are the platforms’ published rules as we understand them, not checked live, and platforms change them. Confirm on the platform’s own sign-up screen before you commit.</p>
+
+          <h3 class="mb-2 mt-8">Xbox</h3>
+          <p>Length is the main constraint. The modern gamertag system allows up to 12 characters and adds a number suffix when your first choice is taken, so a short, distinctive name is worth more here than anywhere else. Because underscores are not available, the tool leaves them out when you choose Xbox, and short prefix and suffix names such as turboluna are common.</p>
+          <h3 class="mb-2 mt-6">PlayStation</h3>
+          <p>PlayStation online IDs run 3 to 16 characters and must start with a letter. They are seen by everyone on your friends list, so a name that is easy to read aloud and type into a search box saves friends from guessing spellings. Hyphens are allowed here and almost nowhere else.</p>
+          <h3 class="mb-2 mt-6">Steam</h3>
+          <p>Steam has two names. The account name is what you log in with and cannot be changed, while the profile name people see is far more relaxed and can run to 32 characters. That room suits longer word pairings, so choosing Steam favors underscore pairs like maya_viper. Pick a profile name you will still like in a few years.</p>
+          <h3 class="mb-2 mt-6">Minecraft</h3>
+          <p>Java Edition names run 3 to 16 characters of letters, numbers and underscores, and they are typed into server commands and whitelists, so simple and easy to spell beats clever. Bedrock Edition uses your Xbox gamertag instead, so follow the Xbox rules there. Choosing Minecraft favors plain underscore pairings.</p>
+          <h3 class="mb-2 mt-6">Roblox</h3>
+          <p>Roblox usernames run 3 to 20 characters and allow letters, numbers and a single underscore that cannot start or end the name. You will often see number tails on Roblox, so choosing it brings those up first. It also has a younger audience, which is why the safety tips below matter most here.</p>
+        </section>
+
+        <section aria-labelledby="safety">
+          <h2 id="safety" class="mb-4">Keeping your gaming name safe</h2>
+          <p>A gamertag is public, often to strangers, so keep personal details out of it. Do not use your full name, your school or town, your birth year or anything that reveals your age. That matters most for younger players, and Roblox in particular does not allow usernames that share personal information.</p>
+          <p>The tool builds names from the word you enter, so use a nickname or a favorite word rather than your real name, and do not add digits from a birthday. If a friend or parent helps you pick a name, agree on it together before you register.</p>
+        </section>
+
+        <section aria-labelledby="social">
+          <h2 id="social" class="mb-4">Looking for a social media username?</h2>
+          <p>Gaming names and social names follow different rules and moods. A name that suits a Fantasy lobby may not suit a TikTok profile, and platforms like X and Instagram limit length and characters differently. Our <a href="/username-generator">Username Generator</a> has cute, aesthetic and unique styles and shows the limits for TikTok, Instagram, Snapchat and X.</p>
+        </section>
+
+        <section aria-labelledby="choose">
+          <h2 id="choose" class="mb-4">How to choose a gamertag that lasts</h2>
+          <p>You may keep the same name for years, so a few checks are worth doing:</p>
+          <ul class="mt-4 list-disc space-y-3 pl-5 marker:text-accent">
+            <li><strong class="text-ink">Say it aloud.</strong> Teammates will call it in voice chat, so it should be quick to say and hard to mishear.</li>
+            <li><strong class="text-ink">Avoid look-alike letters.</strong> Names mixing l, I and 1, or O and 0, are hard to type when a friend wants to add you.</li>
+            <li><strong class="text-ink">Aim for 12 characters or fewer.</strong> That fits every major platform, so you can use one name everywhere.</li>
+            <li><strong class="text-ink">Skip trends.</strong> A meme or slogan may seem funny now and embarrassing next year.</li>
+            <li><strong class="text-ink">Check each platform.</strong> Availability differs everywhere, so search for the name in each app before you settle.</li>
+            <li><strong class="text-ink">Keep it private.</strong> Leave real names, birth years and locations out of it.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="why">
+          <h2 id="why" class="mb-4">Character limits, told straight</h2>
+          <p>A gamertag rejected at sign-up is worse than none. Pick Xbox, PlayStation, Steam, Minecraft or Roblox and the tool applies the name-length and allowed-character rules for that service, and each result is tagged with every platform it fits.</p>
+          <p>Those rules are our understanding of each platform and are not checked live, so verify them at sign-up. We cannot see which tags are taken, either. The word lists are hand-picked and the techniques are rules, so hovering a gamertag names the technique behind it. That is the difference from tools that say “AI” and leave it there.</p>
+          <p>It is free and private, with no popups in the way and no account needed to keep anything. Save the tags you like, then Share the shortlist to your squad: the share sheet on a phone, or quick links to WhatsApp, X, Facebook and Email, plus a Copy button, on a PC. Your friends can open it with no sign-in and no install.</p>
+        </section>
+
+        <section aria-labelledby="faq">
+          <h2 id="faq" class="mb-6">Gamertag Generator FAQ</h2>
+          <div class="space-y-6">
+            {faqs.map((f) => (
+              <div>
+                <h3 class="mb-2 text-ink">{f.q}</h3>
+                <p>{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="related">
+          <h2 id="related" class="mb-6">More tools for players and creators</h2>
+          <ul class="grid gap-4 sm:grid-cols-3">
+            {related.map((r) => (
+              <RelatedToolCard tool={r.tool} line={r.line} />
+            ))}
+          </ul>
+        </section>
+      </article>
+    </div>
+  </ToolThemeWrapper>
+</BaseLayout>

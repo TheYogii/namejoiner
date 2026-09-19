@@ -1,0 +1,223 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolThemeWrapper from '../components/ToolThemeWrapper.astro';
+import RelatedToolCard from '../components/RelatedToolCard.astro';
+import NicknameTool from '../components/NicknameTool';
+import { Smile } from '@lucide/astro';
+import { toolBySlug } from '../data/tools';
+
+const usernameBuilt = toolBySlug('username-generator').built;
+const gamertagBuilt = toolBySlug('gamertag-generator').built;
+
+const title = 'Nickname Generator — Type a Name, Get Cute or Funny Ideas';
+const description =
+  'Free nickname generator: type a name and get cute, funny, cool or classic nicknames in one click. For you, a partner, a friend or a pet. No signup.';
+const path = '/nickname-generator';
+const url = `https://namejoiner.com${path}`;
+
+const faqs = [
+  {
+    q: 'How does a nickname generator work?',
+    a: 'This one takes a single name and looks for its natural shortened forms, such as Alex and Xander from Alexander, or Liz and Beth from Elizabeth. It then applies the style you choose (friendly endings for Cute, playful endings and rhymes for Funny, short punchy forms for Cool, shortened forms only for Classic) and adjusts for who the nickname is for. Results are ranked by how easy they are to say.',
+  },
+  {
+    q: 'Can I use this for a boyfriend or girlfriend’s name?',
+    a: 'Yes. Choose Partner under “Who’s it for?” and the tool pulls soft, affectionate endings to the top, whatever style you picked, and leans harder on them with Cute. Try a nickname privately before you use it in public, because it works best when the other person enjoys it. If you would rather have a name that combines both of you, the Couple Name Combiner does that.',
+  },
+  {
+    q: 'What is the “Trait or inside joke” field?',
+    a: 'It is an optional field for something true about the person, like sleepy, always late or coffee obsessed. The tool builds nicknames around it, such as Sleepy Sarah, Sarah the Sleepy and Sleepyhead. It rejects unkind words, and Kid mode also rejects adult words. Leave it empty and you get the standard name-only nicknames.',
+  },
+  {
+    q: 'What is the difference between Single Word and Phrase?',
+    a: 'Single Word keeps each nickname to one continuous word, like Alexie or Xander. Phrase builds two-word nicknames with a space, like Captain Alex, Sleepy Sarah or Lil Al. Nicknames can have spaces because people say them aloud, unlike usernames and gamertags, which must be continuous strings.',
+  },
+  {
+    q: 'What does the “Who’s it for?” setting change?',
+    a: 'It has seven options: Anyone, Myself, Friend, Partner, Sibling, Pet and Kid. Anyone is the standard ranking, Partner favors soft endings, Myself favors shortened and cool forms, Pet keeps only short forms with repeated sounds (or two very short words in Phrase format), and Friend and Sibling change the order only slightly. Kid also filters out adult, rude and unkind words, but it is a word list and cannot catch everything, so read each nickname before you use it.',
+  },
+  {
+    q: 'Does this work for any name, including non-English names?',
+    a: 'It works for any name you can type in Latin letters, including Priya, Wei, Siobhan and names with accents. It does not translate names or know cultural nicknames, so it will not produce traditional pet names from a specific language. For names in other scripts, type the usual Latin spelling instead.',
+  },
+  {
+    q: 'Do the nicknames come from an AI model?',
+    a: 'No. Fixed rules about syllables, shortened forms, endings and rhymes produce every nickname, so the same name, style and audience always return the same list. Hover over any result to see how it was made. A rule-based approach also makes it easy to filter out shortened forms that would spell something unkind.',
+  },
+  {
+    q: 'Will I need to register or pay to generate nicknames?',
+    a: 'No registration and no payment: the tool is free, needs no email address, and has no limit on how many names you try. It runs in your browser, so the names you type stay on your device. Short names such as Bo or Al have few natural nicknames, so expect a shorter list for them.',
+  },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'NameJoiner Nickname Generator',
+    url,
+    description:
+      'A free online nickname generator that turns one name into cute, funny, cool or classic nicknames, adjusted for who the nickname is for, using shortened forms, friendly endings and rhymes.',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Any (runs in a web browser)',
+    browserRequirements: 'Requires JavaScript',
+    isAccessibleForFree: true,
+    inLanguage: 'en',
+    dateModified: '2026-09-19',
+    featureList: [
+      'Cute, funny, cool and classic nickname styles',
+      'Single word or two-word phrase nicknames',
+      'Optional trait or inside joke to build nicknames around',
+      'Adjusts for who the nickname is for, with a kid-safe filter',
+    ],
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+
+const related = [
+  { slug: 'couple-name-combiner', line: 'Want a name that blends both of you? Combine two names into one shared couple name.' },
+  { slug: 'username-generator', line: 'Turn a nickname into a matching handle for TikTok, Instagram and more.' },
+  { slug: 'baby-name-combiner', line: 'Blend parents’ names into baby name ideas, then find the nickname it will grow into.' },
+]
+  .map((r) => ({ ...r, tool: toolBySlug(r.slug) }))
+  .filter((r) => r.tool.built); // unbuilt tools reappear here once built
+---
+<BaseLayout {title} {description} {path} theme="nickname" {schema} ogImageAlt="Nickname Generator by NameJoiner: turn any name into a nickname">
+  <ToolThemeWrapper theme="nickname">
+    <div class="mx-auto max-w-6xl px-4 pb-8 pt-12 sm:px-6 sm:pt-16">
+
+      <header>
+        <p class="inline-flex items-center gap-2 rounded-full bg-pill-a px-3 py-1 text-sm font-medium text-accent-dark">
+          <Smile size={14} strokeWidth={1.75} aria-hidden="true" /> Free nickname generator
+        </p>
+        <h1 class="mt-4">Type any name and get nicknames from our Nickname Generator</h1>
+        <div class="prose-body mt-5 text-lg">
+          <p>
+            Type a name, pick a style, and get nickname ideas for it. One name goes in and a list of shortened forms, friendly endings and playful twists comes out. It works for yourself, a friend, a partner, a sibling or a pet, and there are cute, funny, cool and classic styles to choose from.
+          </p>
+          <p>
+            The nicknames are generated instantly in your browser from simple rules, not AI. There is nothing to sign up for and no limit on how many names you try. Add a trait or inside joke for nicknames like Sleepy Sarah, choose a single word or a two-word phrase, and pick who it is for, whether that is yourself, a partner, a friend, a sibling, a pet or a kid. Treat it as a starting point, then keep the one that makes the person smile.
+          </p>
+        </div>
+      </header>
+
+      <section class="mt-10" aria-label="Nickname generator tool">
+        <NicknameTool client:visible />
+      </section>
+
+      <article class="prose-body mt-16 space-y-14">
+
+        <section aria-labelledby="how">
+          <h2 id="how" class="mb-4">The rules that shorten, soften and rhyme your name</h2>
+          <p>This nickname generator uses rule-based word play, not AI, and it is worth knowing how. Every nickname comes from a rule you can read below, and hovering over any result shows which one made it.</p>
+          <h3 class="mb-2 mt-6">Finding the shortened forms</h3>
+          <p>The tool splits your name into approximate syllables and looks for the cuts that people actually use. Alexander gives Alex, Al and Lex from the front, and Xander from the end. Elizabeth gives Liz and Beth. Each candidate has to be easy to say, and each is ranked by how natural the cut is. Shortened forms that would spell something unkind are removed.</p>
+          <h3 class="mb-2 mt-6">Adding the style</h3>
+          <p>Every shortened form then gets the treatment for the style you picked. Cute adds soft endings like -ie, -y, -bug and -boo, and doubles a first sound, so Ben can become Bebe. Funny adds -ster, -meister, -inator and -zilla, plus the “Shm-” rhyme and the “Sir Ben-a-Lot” pun. Cool keeps things short and adds x, z or o endings and titles like Big, Lil, Chief and Dr. Classic adds nothing and keeps only the shortened forms.</p>
+          <h3 class="mb-2 mt-6">Single words and phrases</h3>
+          <p>Real nicknames come in two shapes. Some are one word, like Alexie or Xander. Others are a short phrase, like Captain Alex, Sleepy Sarah or Lil Al. The Format setting builds each shape on purpose. Single Word keeps every nickname one continuous word, and Phrase combines a title or trait with a shortened name.</p>
+          <p>This is why the tool works differently from our {usernameBuilt ? <a href="/username-generator">Username Generator</a> : 'Username Generator'} and {gamertagBuilt ? <a href="/gamertag-generator">Gamertag Generator</a> : 'Gamertag Generator'}. A username or gamertag has to be a continuous string with no spaces, so those tools can only build single words. A nickname is something people say, not something they type into a sign-up form, so it can have spaces, and a phrase is often the most natural form.</p>
+          <h3 class="mb-2 mt-6">Trait or inside joke</h3>
+          <p>If you fill in the optional trait field, the tool builds nicknames around it. In Phrase format it pairs the trait with the name (Sleepy Sarah), turns it into “Sarah the Sleepy” when the word reads like an adjective, and pairs it with a title (Captain Sleepy). In Single Word format it uses the trait itself and adds a friendly noun, like Sleepyhead or Coffeebean. Filler words such as “always” are dropped, so “always late” becomes Late Sarah.</p>
+          <p>Traits are free text, so they are checked first. A trait that would make an unkind or rude nickname is rejected, and Kid mode also rejects adult words. With the trait empty, you get name-only nicknames exactly as before.</p>
+          <h3 class="mb-2 mt-6">Who it is for</h3>
+          <p>The second setting changes the ranking, not the rules. Partner pulls soft endings toward the top, Myself puts shortened and cool forms first, and Pet keeps only short forms with repeated sounds. Friend and Sibling barely change the list. Kid is the only one that removes results: it checks every nickname against a list of adult, rude and unkind words, including words that appear across a space or hyphen, and drops the adult-leaning forms like “Sir Ben-a-Lot”. It is a word list, so it cannot catch everything.</p>
+          <h3 class="mb-2 mt-6">What it cannot do</h3>
+          <p>It does not know your friends’ inside jokes or the traditional pet names of a particular culture, and it does not translate anything. Very short names, like Bo or Al, have few natural nicknames, so those lists are short by design. We would rather show a few good options than pad the list.</p>
+        </section>
+
+        <section aria-labelledby="based">
+          <h2 id="based" class="mb-4">Nicknames based on your name</h2>
+          <p>The tool is built around one simple idea: enter your name and see what it can become. A few habits get better results. Type the full formal name, because Alexander has more places to cut than Alex. Use the spelling people actually see, since Katherine and Kathryn shorten differently.</p>
+          <p>If your name has an accent, keep it. Names such as Zoë or José work, and a name from another language works as long as you type it in Latin letters. If people already call you something, treat that as the raw material: enter it, then try the Cute and Cool styles for a fresh take on a name you already know.</p>
+        </section>
+
+        <section aria-labelledby="trait">
+          <h2 id="trait" class="mb-4">Nicknames from a trait or inside joke</h2>
+          <p>The best nicknames usually come from something true about a person: they are always sleepy, always late, or never without a coffee. Type that into the trait field and choose Phrase. Sarah and “sleepy” give Sleepy Sarah and Sarah the Sleepy, and in the Funny style they also give Captain Sleepy and Professor Sleepy.</p>
+          <p>Choose Single Word instead for one-word forms: “sleepy” gives Sleepy and, in the Funny style, Sleepyhead, and “coffee” gives Coffee and, in the Cute style, Coffeebean. Pick an affectionate trait, because a nickname built on something the person dislikes about themselves will not stick. If you do not have a trait in mind, leave the field empty and try titles instead, such as Captain Alex or Lil Al.</p>
+        </section>
+
+        <section aria-labelledby="funny">
+          <h2 id="funny" class="mb-4">Funny nickname ideas</h2>
+          <p>A funny nickname generator works by exaggeration. Pick the Funny style and Alexander becomes Alexster, Alexinator or Alexzilla, all of which add an oversized ending to a familiar name. The “Shm-” rhyme gives Alex Shmalex, and the pun gives Sir Alex-a-Lot.</p>
+          <p>Funny only works when the person is in on the joke. A good funny nickname is affectionate, so it should never mock how someone looks or a mistake they made. Try it on a small group first, and if the person winces instead of laughing, drop it. The best ones tend to be short enough to say in a group chat without explanation.</p>
+        </section>
+
+        <section aria-labelledby="cool">
+          <h2 id="cool" class="mb-4">Cool nickname ideas</h2>
+          <p>A cool nickname generator has different goals: short, confident and easy to say. The Cool style trims the name to its punchiest form, then adds an ending like x, z or o, so Alex can become Alexo. It also adds titles, giving Big Alex, Chief Alex, Dr. Alex or Alex Prime.</p>
+          <p>Cool nicknames work best when they feel earned, so save the big titles for someone who can carry them. For everyday use, a plain short form like Lex or Xander often sounds cooler than anything with an ending. Read the options aloud, and choose the one you could say without cringing to someone’s face.</p>
+        </section>
+
+        <section aria-labelledby="relationship">
+          <h2 id="relationship" class="mb-4">Nicknames by relationship</h2>
+          <p>Who a nickname is for changes what works. The “Who’s it for?” setting adjusts the results for each relationship, and this table shows what to expect from each one.</p>
+
+          <div class="mt-6 overflow-x-auto rounded-[12px] border border-line bg-white">
+            <table class="w-full min-w-[40rem] border-collapse text-left text-sm">
+              <caption class="sr-only">How each “Who’s it for?” option changes nickname results</caption>
+              <thead class="bg-paper text-ink">
+                <tr>
+                  <th scope="col" class="px-4 py-3 font-semibold">Who it’s for</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">What tends to work</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">What the tool does</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">Worth watching</th>
+                </tr>
+              </thead>
+              <tbody class="text-ink-soft">
+                <tr class="border-t border-line"><th scope="row" class="px-4 py-3 font-semibold text-ink">Partner</th><td class="px-4 py-3">Soft, affectionate endings</td><td class="px-4 py-3">Leans toward -ie, -y, -bug and -boo whatever style you pick, and strongly with Cute</td><td class="px-4 py-3">Try it in private first, and skip anything about looks</td></tr>
+                <tr class="border-t border-line"><th scope="row" class="px-4 py-3 font-semibold text-ink">Friend</th><td class="px-4 py-3">Playful, built on a shared joke</td><td class="px-4 py-3">Slight lean toward rhymes and endings</td><td class="px-4 py-3">Only use it if they are in on the joke</td></tr>
+                <tr class="border-t border-line"><th scope="row" class="px-4 py-3 font-semibold text-ink">Sibling</th><td class="px-4 py-3">Short and a little teasing</td><td class="px-4 py-3">Slight lean toward short forms and titles like Big Ben</td><td class="px-4 py-3">Teasing that stops being fun is not a nickname</td></tr>
+                <tr class="border-t border-line"><th scope="row" class="px-4 py-3 font-semibold text-ink">Myself</th><td class="px-4 py-3">Understated and easy to say</td><td class="px-4 py-3">Shortened and cool forms lead</td><td class="px-4 py-3">A nickname you have to explain is not working yet</td></tr>
+                <tr class="border-t border-line"><th scope="row" class="px-4 py-3 font-semibold text-ink">Pet</th><td class="px-4 py-3">Short, with repeated sounds</td><td class="px-4 py-3">Only one or two syllables and up to six letters, boosting doubled sounds like Lele</td><td class="px-4 py-3">Avoid names that sound like a command</td></tr>
+                <tr class="border-t border-line"><th scope="row" class="px-4 py-3 font-semibold text-ink">Kid</th><td class="px-4 py-3">Playful and gentle</td><td class="px-4 py-3">Adds a content filter that removes adult, rude and unkind words</td><td class="px-4 py-3">Read each one, because the filter cannot catch everything</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="mt-6"><strong class="text-ink">Partners.</strong> For a boyfriend or girlfriend, choose Partner and start with the Cute style. Benjamin gives Benny, Bennie, Benbug and Bebe, and Elizabeth gives Bethie and Liz. A partner nickname works best when it feels natural in private first, so check before you use it in front of friends. Want a name that blends both of you instead? Try the {toolBySlug('couple-name-combiner').built ? <a href="/couple-name-combiner">Couple Name Combiner</a> : 'Couple Name Combiner'}, which merges two names into one.</p>
+          <p class="mt-4"><strong class="text-ink">Pets.</strong> A pet responds to a clear, short sound, so this setting keeps only forms of one or two syllables and boosts repeated sounds. Alexander becomes Lexie, Lexy or Lele. Say the name aloud a few times before you settle, and avoid anything that sounds like a command your pet already knows.</p>
+          <p class="mt-4"><strong class="text-ink">Kids.</strong> The Kid setting adds a content filter that removes nicknames containing common adult, rude or unkind words, including ones formed across two words. It errs on the side of removing too much, so a harmless nickname like Cassie can be dropped along with the bad ones. It cannot promise to catch every double meaning, or any word in another language, so read each nickname before you use it.</p>
+        </section>
+
+        <section aria-labelledby="why">
+          <h2 id="why" class="mb-4">A nickname tool that asks who it is for</h2>
+          <p>A nickname depends on the relationship, so this tool asks. The audience setting leans results toward the person: soft endings for a partner, short forms for yourself, one or two syllables for a pet. For a kid it adds a filter that screens adult and unkind words, though no filter catches everything, so read each one first.</p>
+          <p>Format switches between one word and two, and an optional trait or inside joke gives you nicknames like Sleepy Sarah. The same name always gives the same list, since it is written rules and not a mystery model, and nothing you type is sent anywhere.</p>
+          <p>Some generators want an account before they let you save or send anything. Here you save what makes someone smile and press Share. It goes out from your phone’s share sheet, or from a dialog on a computer. Whoever gets it can read it straight away.</p>
+        </section>
+
+        <section aria-labelledby="faq">
+          <h2 id="faq" class="mb-6">Nickname Generator FAQ</h2>
+          <div class="space-y-6">
+            {faqs.map((f) => (
+              <div>
+                <h3 class="mb-2 text-ink">{f.q}</h3>
+                <p>{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="related">
+          <h2 id="related" class="mb-6">Other name tools worth a look</h2>
+          <ul class="grid gap-4 sm:grid-cols-3">
+            {related.map((r) => (
+              <RelatedToolCard tool={r.tool} line={r.line} />
+            ))}
+          </ul>
+        </section>
+      </article>
+    </div>
+  </ToolThemeWrapper>
+</BaseLayout>

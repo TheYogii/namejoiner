@@ -1,0 +1,18 @@
+---
+import ToolIcon from './ToolIcon.astro';
+import type { Tool } from '../data/tools';
+
+interface Props {
+  tool: Tool;
+  /** One line on why this tool pairs with the current page. */
+  line: string;
+}
+const { tool, line } = Astro.props;
+---
+<li class="list-none">
+  <div data-theme={tool.theme} class="card flex h-full flex-col gap-3 p-5">
+    <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-pill-a text-accent-dark"><ToolIcon icon={tool.icon} size={22} /></span>
+    <h3 class="text-base"><a href={`/${tool.slug}`} class="font-semibold text-accent-dark no-underline hover:text-ink">{tool.name}</a></h3>
+    <p class="text-sm leading-6 text-ink-soft">{line}</p>
+  </div>
+</li>

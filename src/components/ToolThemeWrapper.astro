@@ -1,0 +1,6 @@
+---
+import type { ThemeName } from '../data/tools';
+interface Props { theme: ThemeName; class?: string }
+const { theme, class: cls } = Astro.props;
+---
+<div data-theme={theme} class:list={['bg-accent-bg', cls]}><slot /></div>

@@ -1,0 +1,163 @@
+@import 'tailwindcss';
+@import './themes.css';
+
+/* Static neutrals shared by every page */
+@theme {
+  --color-paper: #fffbf9;
+  --color-ink: #2c2420;
+  --color-ink-soft: #6b5d56;
+  --color-line: #ece3de;
+  /* Fixed black for the "Joiner" half of the NameJoiner wordmark. Deliberately not a theme variable, so the logo never changes with the page's tool theme. */
+  --color-brand: #000000;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --radius-card: 16px;
+  --radius-field: 12px;
+
+  /* One motion speed for the whole site. Tailwind's transition-* utilities read these, so every hover, selection and focus
+     change moves at 200ms ease-out, whichever page or component it is on. */
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Accent slots: utilities read runtime variables that [data-theme] blocks set */
+@theme inline {
+  --color-accent-bg: var(--accent-bg);
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
+  --color-accent-2: var(--accent-2);
+  --color-accent-2-dark: var(--accent-2-dark);
+  --color-pill-a: var(--pill-a);
+  --color-pill-b: var(--pill-b);
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-paper text-ink font-sans antialiased; }
+  h1, h2, h3 { @apply text-ink font-semibold tracking-tight text-balance; }
+  h1 { @apply text-4xl leading-[1.1] sm:text-5xl; }
+  h2 { @apply text-2xl leading-tight sm:text-3xl; }
+  h3 { @apply text-lg sm:text-xl; }
+  :focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+
+  :root { --motion-duration: 200ms; --motion-ease: cubic-bezier(0, 0, 0.2, 1); }
+
+  /* Interactive elements ease between states instead of snapping. Utilities that set their own transition inherit the same timing. */
+  a, button, summary, label, input, textarea, select {
+    transition-property: color, background-color, border-color, box-shadow, opacity, filter, transform, text-decoration-color;
+    transition-duration: var(--motion-duration);
+    transition-timing-function: var(--motion-ease);
+  }
+}
+
+@layer components {
+  /* Body text spans the full content width, so from lg up it gets a little more size and line height to keep the long lines readable. */
+  .prose-body p { @apply text-base leading-7 text-ink-soft lg:text-[1.0625rem] lg:leading-8; }
+  .prose-body li { @apply lg:leading-8; }
+  .prose-body p + p { @apply mt-4; }
+  .prose-body a, .link { @apply text-accent-dark underline underline-offset-4 decoration-accent/40 hover:decoration-accent-dark; }
+  .card { @apply rounded-[16px] border border-line bg-white; }
+
+  /*
+   * Primary action button. The gradient runs from the page theme's primary (top-left corner) to its primary-dark (bottom-right), so it is
+   * clearly visible. The label sits near the middle of the button, where white text is at least 4.5:1 on every theme.
+   * Hover and press darken it, and it uses no colors outside the theme.
+   */
+  .btn-primary {
+    color: #fff;
+    background-color: var(--accent-dark);
+    background-image: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.14), 0 1px 2px rgb(44 36 32 / 0.12);
+    cursor: pointer;
+    gap: 0.5rem; /* space between a leading icon and the label */
+  }
+  .btn-primary:hover { filter: brightness(0.93); }
+  .btn-primary:active { filter: brightness(0.86); transform: translateY(1px); }
+
+  /*
+   * Homepage "How it works" timeline. Numbered badges sit on a line: vertical below md, horizontal from md up. The script arms it (data-armed) and later reveals it (data-in); without the script everything just shows.
+   */
+  /* Each line ends at the centre of the next badge (badges are z-10 and solid, so they sit on top of it).
+     Horizontal: it starts at the centre of its own badge. Vertical: it starts just below its step's text, so it never crosses the centred text. */
+  .tl-line { left: 50%; bottom: -1.5rem; width: 2px; height: 3.5rem; translate: -50% 0; transform-origin: top; }
+  @media (min-width: 48rem) {
+    .tl-line { top: 1.5rem; bottom: auto; width: calc(100% + 1.5rem); height: 2px; translate: 0 -50%; transform-origin: left; }
+  }
+  .timeline[data-armed] .tl-node { opacity: 0; scale: 0.6; }
+  .timeline[data-armed] .tl-body { opacity: 0; translate: 0 8px; }
+  .timeline[data-armed] .tl-line { scale: 1 0; }
+  @media (min-width: 48rem) { .timeline[data-armed] .tl-line { scale: 0 1; } }
+  .timeline[data-in] .tl-node, .timeline[data-in] .tl-body {
+    opacity: 1; scale: 1; translate: 0 0;
+    transition: opacity calc(var(--motion-duration) * 2) var(--motion-ease), scale calc(var(--motion-duration) * 2) var(--motion-ease), translate calc(var(--motion-duration) * 2) var(--motion-ease);
+    transition-delay: calc(var(--i, 0) * 250ms);
+  }
+  .timeline[data-in] .tl-line {
+    scale: 1 1;
+    transition: scale calc(var(--motion-duration) * 3) var(--motion-ease);
+    transition-delay: calc(var(--i, 0) * 250ms + 150ms);
+  }
+
+  /* Header dropdown and mobile menu ease open and closed. They stay out of the tab order and accessibility tree while closed. */
+  [data-tools-panel] {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity var(--motion-duration) var(--motion-ease), transform var(--motion-duration) var(--motion-ease), visibility 0s linear var(--motion-duration);
+  }
+  [data-tools-panel][data-open='true'] { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+
+  .mobile-nav {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition: grid-template-rows var(--motion-duration) var(--motion-ease), visibility 0s linear var(--motion-duration);
+  }
+  .mobile-nav[data-open='true'] { grid-template-rows: 1fr; visibility: visible; transition-delay: 0s; }
+  .mobile-nav > * { min-height: 0; overflow: hidden; }
+}
+
+/*
+ * Text input focus: a soft glow in the page theme's primary, easing in and out. Unlayered on purpose, so it beats the
+ * per-input border utilities. Keeps a visible 3:1+ border color change as well, so focus never depends on the glow alone.
+ */
+input[type='text']:focus, input:not([type]):focus {
+  outline: none;
+  border-color: var(--accent-dark);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+input[aria-invalid='true']:focus { border-color: #b91c1c; box-shadow: 0 0 0 4px rgb(185 28 28 / 0.18); }
+
+@keyframes pill-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .pill-in { animation: none !important; }
+  /* People who ask for less motion get instant state changes everywhere. */
+  :root { --motion-duration: 1ms; --default-transition-duration: 1ms; }
+  .btn-primary:active { transform: none; }
+}
+
+/* Share dialog: fades and scales in and out with the site's motion timing. The discrete transitions let the closing animation play before
+   the dialog leaves the top layer; browsers without that support simply switch instantly. */
+.share-dialog {
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  opacity: 0;
+  scale: 0.96;
+  transition: opacity var(--motion-duration) var(--motion-ease), scale var(--motion-duration) var(--motion-ease),
+    overlay var(--motion-duration) allow-discrete, display var(--motion-duration) allow-discrete;
+}
+.share-dialog[open] { opacity: 1; scale: 1; }
+.share-dialog::backdrop {
+  background: rgb(44 36 32 / 0.45);
+  opacity: 0;
+  transition: opacity var(--motion-duration) var(--motion-ease), overlay var(--motion-duration) allow-discrete, display var(--motion-duration) allow-discrete;
+}
+.share-dialog[open]::backdrop { opacity: 1; }
+@starting-style {
+  .share-dialog[open] { opacity: 0; scale: 0.96; }
+  .share-dialog[open]::backdrop { opacity: 0; }
+}
+body:has(.share-dialog[open]) { overflow: hidden; }

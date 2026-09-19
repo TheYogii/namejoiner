@@ -1,0 +1,26 @@
+---
+import ToolIcon from './ToolIcon.astro';
+import { ArrowUpRight } from '@lucide/astro';
+import type { Tool } from '../data/tools';
+interface Props { tool: Tool }
+const { tool } = Astro.props;
+const Tag = tool.built ? 'a' : 'div';
+---
+<li data-theme={tool.theme} class="list-none">
+  <Tag
+    {...(tool.built ? { href: `/${tool.slug}` } : { 'aria-disabled': 'true' })}
+    class:list={['card group flex h-full flex-col gap-4 p-6 transition-colors',
+      tool.built ? 'hover:border-accent hover:bg-accent-bg' : 'cursor-not-allowed bg-paper opacity-70']}>
+    <span class:list={['flex size-11 items-center justify-center rounded-xl', tool.built ? 'bg-pill-a text-accent-dark' : 'bg-line text-ink-soft']}>
+      <ToolIcon icon={tool.icon} />
+    </span>
+    <span class="flex-1">
+      <span class="flex items-center gap-2">
+        <h3 class="text-lg font-semibold">{tool.name}</h3>
+        {!tool.built && <span class="rounded-full bg-line px-2 py-0.5 text-xs font-medium text-ink-soft">Coming soon</span>}
+      </span>
+      <span class="mt-1 block text-sm leading-6 text-ink-soft">{tool.description}</span>
+    </span>
+    {tool.built && <span class="inline-flex items-center gap-1 text-sm font-medium text-accent-dark">Try it <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" /></span>}
+  </Tag>
+</li>

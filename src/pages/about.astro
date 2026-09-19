@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { tools } from '../data/tools';
+
+const title = 'About NameJoiner: Free Name Tools Built on Simple Rules';
+const description =
+  'NameJoiner is a set of free, rule-based name tools for couples, parents, founders and gamers. Learn how they work, why they are free and who makes them.';
+const built = tools.filter((t) => t.built);
+---
+<BaseLayout title={title} description={description} path="/about">
+  <div class="mx-auto max-w-3xl px-4 pb-8 pt-12 sm:px-6 sm:pt-16">
+    <h1>About NameJoiner: free tools for joining and making names</h1>
+    <div class="prose-body mt-5 text-lg">
+      <p>NameJoiner is a small collection of free tools that turn a few words or names into something new. Type two names and get a blended couple name. Type a business keyword and get brandable options. Type your favorite word and get a username that fits Instagram or a gamertag that fits Xbox. Nothing to download, no account to make.</p>
+    </div>
+
+    <article class="prose-body mt-14 space-y-12">
+      <section aria-labelledby="tools">
+        <h2 id="tools" class="mb-4">The tools</h2>
+        <p>Each tool is built for one job, with its own options and its own look, so you are not wrestling a generic generator to do something it was not designed for.</p>
+        <ul class="mt-4 space-y-3">
+          {built.map((t) => (
+            <li><a href={`/${t.slug}`} class="font-medium text-ink underline underline-offset-4 hover:text-ink-soft">{t.name}</a>. {t.description}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="rules">
+        <h2 id="rules" class="mb-4">Rules and word lists, not AI</h2>
+        <p>Every tool here runs on hand-built rules and hand-picked word lists. There is no AI model behind them. To blend two names, the code splits each into syllables, tries a handful of techniques (overlapping shared sounds, swapping syllables, reversing, joining whole words) and then scores each result by how easy it is to say out loud. The best ones rise to the top.</p>
+        <p>That has two practical consequences. First, the same input gives the same list, so you can come back tomorrow and find the names you liked. The only exceptions are the options labeled Random. Second, we can explain any result: hover over a name and the tool tells you which technique produced it.</p>
+        <p>It also means the tools have honest limits. Two very short or near-identical names produce short lists, and the tools say so instead of padding them with weak options. A generator that follows rules cannot know that a name feels right to you. Treat every result as a starting point, and trust your own ear for the final call.</p>
+      </section>
+
+      <section aria-labelledby="private">
+        <h2 id="private" class="mb-4">Your words stay in your browser</h2>
+        <p>The names and words you type are processed on your own device, inside the page. They are not sent to a server and we do not keep them. The <a href="/privacy-policy" class="text-ink underline underline-offset-4 hover:text-ink-soft">Privacy Policy</a> has the details, including what happens when you click an outbound link such as a domain search.</p>
+      </section>
+
+      <section aria-labelledby="free">
+        <h2 id="free" class="mb-4">Why it is free</h2>
+        <p>The tools are free because they are cheap to run: the site is static, and the name-making happens on your device rather than on our servers. There is no paywall, no daily limit and no account.</p>
+        <p>We hope to cover the costs of running and improving the site with advertising and affiliate links, for example when a business name result links to a domain registrar. As of the last update to this page, neither is live. If that changes, affiliate links will be labeled where you see them and will never make anything cost you more.</p>
+      </section>
+
+      <section aria-labelledby="better">
+        <h2 id="better" class="mb-4">Help us get better</h2>
+        <p>Found a name that looks wrong, a platform rule that has changed, or a tool you wish existed? Tell us. Platform limits such as username lengths are noted as we understand them and can go out of date, so corrections are especially welcome. You can reach us on the <a href="/contact" class="text-ink underline underline-offset-4 hover:text-ink-soft">contact page</a>.</p>
+      </section>
+    </article>
+  </div>
+</BaseLayout>

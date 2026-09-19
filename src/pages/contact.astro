@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Contact NameJoiner: Feedback, Bugs and Business Enquiries';
+const description =
+  'Email the NameJoiner team with feedback, bug reports, name-tool ideas or business enquiries. There is no form, just a real inbox at hello@namejoiner.com.';
+---
+<BaseLayout title={title} description={description} path="/contact">
+  <div class="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16">
+    <h1>Contact NameJoiner</h1>
+    <div class="prose-body mt-5 text-lg">
+      <p>Have feedback, a bug to report or an idea for a tool? Want to talk about a partnership? Send us an email. A real person reads it.</p>
+    </div>
+    <p class="mt-8 text-xl font-semibold">
+      <a href="mailto:hello@namejoiner.com" class="text-ink underline underline-offset-4 hover:text-ink-soft">hello@namejoiner.com</a>
+    </p>
+    <section aria-labelledby="helps" class="mt-12">
+      <h2 id="helps" class="text-xl">What helps us reply faster</h2>
+      <ul class="prose-body mt-3 list-disc space-y-2 pl-5">
+        <li>For a bug, tell us which tool, what you typed and what you expected to see.</li>
+        <li>For a wrong platform rule, tell us the platform and the limit you believe is correct.</li>
+        <li>For business enquiries, a line about what you have in mind is plenty.</li>
+      </ul>
+    </section>
+  </div>
+</BaseLayout>

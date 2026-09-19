@@ -1,0 +1,200 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolThemeWrapper from '../components/ToolThemeWrapper.astro';
+import RelatedToolCard from '../components/RelatedToolCard.astro';
+import BabyCombinerTool from '../components/BabyCombinerTool';
+import { Baby } from '@lucide/astro';
+import { toolBySlug } from '../data/tools';
+
+const title = 'Baby Name Combiner Using Both Parents’ Names | Free Tool';
+const description =
+  'Combine parents’ names into baby name ideas. Free baby name combiner for first or middle names, with sibling matching. No signup, runs in your browser.';
+const path = '/baby-name-combiner';
+const url = `https://namejoiner.com${path}`;
+const nicknameBuilt = toolBySlug('nickname-generator').built;
+
+const faqs = [
+  {
+    q: 'What is a baby name combiner, or a baby name generator using parents names?',
+    a: 'It takes the names of both parents and blends pieces of each into new first-name ideas. You enter two names, and the tool lists up to 20 blends with a syllable break under each, so you can hear how it might be pronounced. The results are prompts for a conversation, and plenty of couples end up borrowing just one syllable from a suggestion.',
+  },
+  {
+    q: 'Is the baby name combiner powered by AI?',
+    a: 'No, and that is on purpose. Behind it is a fixed set of rules: names are cut into pieces, the pieces are recombined, and each result is scored on how easily it can be said. Enter the same two names again and the list is identical, hovering over any name reveals the rule that made it, and no model or server ever sees what you type.',
+  },
+  {
+    q: 'Can I combine names for a middle name instead of a first name?',
+    a: 'Yes. Choose “Keep Parent 1 as the middle name” or “Keep Parent 2 as the middle name” above the button, and that parent’s name stays whole in the middle slot. The tool then offers blends as first names and removes any that copy the middle name too closely. You can switch the placement after generating without retyping.',
+  },
+  {
+    q: 'Can I match a new baby’s name style to my other children’s names?',
+    a: 'Yes, through the optional sibling field. Enter up to four names separated by commas, and the tool looks at how many syllables they usually have and how they end, then moves similar blends to the top. It only re-orders the list, so you still see a full range if you would prefer a name that stands apart.',
+  },
+  {
+    q: 'Do I have to pay or register to use the baby name combiner?',
+    a: 'Neither. There is no fee, no account and no email address, and you can try as many name pairs as you like. Because the blending runs on your own device in the browser, your family’s names are never stored. When a blend makes your shortlist, the copy button sends it straight to your notes.',
+  },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'NameJoiner Baby Name Combiner',
+    url,
+    description:
+      'A free online baby name combiner that blends two parents’ names into baby name ideas, with middle-name mode and sibling-style matching.',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Any (runs in a web browser)',
+    browserRequirements: 'Requires JavaScript',
+    isAccessibleForFree: true,
+    inLanguage: 'en',
+    dateModified: '2026-09-18',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+
+const related = [
+  { slug: 'couple-name-combiner', line: 'Blend you and your partner into a shared couple or ship name.' },
+  { slug: 'nickname-generator', line: 'Find a short, affectionate nickname for the new arrival.' },
+  { slug: 'username-generator', line: 'Reserve a matching handle for the family account.' },
+].map((r) => ({ ...r, tool: toolBySlug(r.slug) })).filter((r) => r.tool.built); // unbuilt tools reappear here once built
+---
+<BaseLayout {title} {description} {path} theme="baby" {schema} ogImageAlt="Baby Name Combiner by NameJoiner: blend parents’ names into a baby name">
+  <ToolThemeWrapper theme="baby">
+    <div class="mx-auto max-w-6xl px-4 pb-8 pt-12 sm:px-6 sm:pt-16">
+
+      <header>
+        <p class="inline-flex items-center gap-2 rounded-full bg-pill-a px-3 py-1 text-sm font-medium text-accent-dark">
+          <Baby size={14} strokeWidth={1.75} aria-hidden="true" /> Free baby name generator
+        </p>
+        <h1 class="mt-4">Looking for a Baby Name Combiner that uses both parents’ names?</h1>
+        <div class="prose-body mt-5 text-lg">
+          <p>
+            Expecting, and stuck on names? This baby name combiner is a baby name generator that uses your parents’ names, yours and your partner’s, as its raw material. Enter both names and NameJoiner blends them into up to 20 first-name ideas, each with a syllable break so you know how to say it.
+          </p>
+          <p>
+            You can also keep one parent’s name whole as a middle name, and add your other children’s names so the results lean toward a similar rhythm and ending. Treat every result as a starting point. Plenty of blends sound charming at midnight and awkward at breakfast, so use the list to spark a conversation, then trust your ear and your family. It is free and needs no signup.
+          </p>
+        </div>
+      </header>
+
+      <section class="mt-10" aria-label="Baby name combiner tool">
+        <BabyCombinerTool client:visible />
+      </section>
+
+      <article class="prose-body mt-16 space-y-14">
+
+        <section aria-labelledby="how">
+          <h2 id="how" class="mb-4">How two parents’ names become baby name ideas</h2>
+          <p>This is a rule-based algorithm, not artificial intelligence. There is no trained model behind it, no data collected from other users and no guessing. Every result comes from a fixed technique you can trace, and the same two names always give the same list.</p>
+          <h3 class="mb-2 mt-6">Cutting and joining</h3>
+          <p>The main technique is the portmanteau: the beginning of one name joined to the ending of the other. The tool tries every cut point in both directions. Ryan and Isabel, for example, produce Rybel, Ryabel and Isayan. It also splits names into approximate syllables using vowel boundaries and recombines them, which keeps the natural beat of each name.</p>
+          <h3 class="mb-2 mt-6">Shared sounds and letter pooling</h3>
+          <p>When both names share a letter or sound, the tool builds around it. It also tries pooling letters, such as weaving one name’s consonants around the other’s vowels. Most raw pooling is unreadable, so every result has to pass a pronounceability check that penalises long consonant runs, implausible letter pairs and stacked vowels.</p>
+          <h3 class="mb-2 mt-6">What is dropped for babies</h3>
+          <p>The couple tool also lists simple joins like RyanIsabel. Those read as two names, not one, so this tool drops them, along with results longer than nine letters and any that contain a whole parent’s name.</p>
+          <h3 class="mb-2 mt-6">Sibling matching, middle names and sound preference</h3>
+          <p>Three optional rules sit on top. Sibling matching adds points to blends with a similar syllable count and ending sound. Middle-name mode keeps a parent’s name whole. The sound preference filter sorts results by ending sound. Each rule only changes ranking or filtering, and you can switch any of them off.</p>
+        </section>
+
+        <section aria-labelledby="boy">
+          <h2 id="boy" class="mb-4">Combining names for a baby boy</h2>
+          <p>Parents who combine parents names for baby boy ideas often mention wanting something short, crisp and easy to shout across a playground. Names that end in a consonant, such as -n, -r or -s, tend to sound firm, while names ending in -o or a stressed vowel sound punchy. That is an observation about sound, not a rule, and plenty of boys’ names end in -y or -e.</p>
+          <p>Try the “Leans traditionally masculine” sound preference and read the syllable breaks. With Ryan and Isabel it surfaces Isan and Isayan, and the shorter one is easiest to say quickly. Then check nicknames: a name like Isayan is a mouthful, so find out now whether it shortens naturally.</p>
+        </section>
+
+        <section aria-labelledby="girl">
+          <h2 id="girl" class="mb-4">Combining names for a baby girl</h2>
+          <p>Searches to combine parents names for baby girl ideas usually mean soft, flowing sounds. Endings in -a, -ah, -elle and -ine are common in traditionally feminine names, and names with open vowels feel gentle when spoken. Again, it describes sound patterns rather than a requirement.</p>
+          <p>Mark and Elena, with the “Leans traditionally feminine” preference on, give Marena, Marlena and Malena. Notice how the shared “-ena” carries the rhythm while the opening “Mar” keeps the connection to Dad. If you prefer something less traditional, the “Gender-neutral” option surfaces blends such as Mere, and “Any sound” shows everything. Nothing here needs to fit an expectation.</p>
+        </section>
+
+        <section aria-labelledby="middle">
+          <h2 id="middle" class="mb-4">Blending a parent’s name into the middle name</h2>
+          <p>Using a parent’s name as a baby’s middle name is a tradition in many families, and it solves a common problem: you honour someone without squeezing a long name into a first-name slot. In middle-name mode, one parent’s name stays whole and the tool builds first names from the blends around it.</p>
+          <p>For Aditi and Rohan, with Rohan kept as the middle name, you might see “Adihan Rohan”. The tool removes first names that begin the same way as the middle name, so you do not get “Rohiti Rohan”. Say the two names together: a short first name pairs well with a longer middle, and the stress should fall comfortably. Also check the initials, since a first and middle initial will appear on paperwork for life.</p>
+        </section>
+
+        <section aria-labelledby="surname">
+          <h2 id="surname" class="mb-4">Blending last names and surnames</h2>
+          <p>Surnames follow different rules from first names, which is why this tool works with first names only. A surname is passed on, so blending it means choosing a family identity, not a nickname. Common approaches are a hyphenated surname, giving one surname as the last name and the other as the middle name, or creating a new blended surname.</p>
+          <p>If you are curious about a blended surname, you can run two surnames through our <a href="/couple-name-combiner">Couple Name Combiner</a> to hear the options. Before you commit, check the legal side: rules for naming a child and for hyphenated or newly created surnames vary by state, so ask your hospital’s birth certificate staff or your state’s vital records office what is allowed and what paperwork applies.</p>
+        </section>
+
+        <section aria-labelledby="sibling-style">
+          <h2 id="sibling-style" class="mb-4">Matching a new baby’s name to siblings</h2>
+          <p>Many parents want the new name to feel like it belongs in the family, without sounding identical to the names already there. The sibling field exists for exactly that. Open “Add sibling names”, type up to four names separated by commas, and the tool compares each blend to them.</p>
+          <h3 class="mb-2 mt-6">What the tool matches</h3>
+          <p>It looks at two things. First is syllable count: if your children are Maya and Nora, both two syllables, blends with two syllables move up. Second is the ending sound: names that end the way the siblings’ names do earn a bigger boost, followed by matching final letters and matching vowel or consonant endings. In our Ryan and Isabel example, adding Maya and Nora lifts Rina and Syba, both two syllables ending in -a, to the top of the list.</p>
+          <p>Matching never removes results. It re-orders them, so if you would prefer a name that stands apart, scroll down or leave the field empty.</p>
+          <h3 class="mb-2 mt-6">What to check by hand</h3>
+          <p>Similar is good, but identical is not. Avoid names that rhyme, such as Aiden and Jaden, which cause mix-ups at home and school. Check that the initials differ, since a shared first letter makes labelled lunchboxes and shared email accounts confusing. Say the whole set aloud in birth order, as you would when calling everyone to dinner, and listen for a natural rhythm.</p>
+          <p>Blended and step families often have siblings from different backgrounds. If yours does, enter only the names whose style you want to echo, and skip the rest.</p>
+        </section>
+
+        <section aria-labelledby="also">
+          <h2 id="also" class="mb-4">Also useful for pet names and character names</h2>
+          <p>Nothing about the blending is specific to babies. New puppy owners can blend their two names for a pet, and fiction writers can mix two names to create a character with a distinctive but believable name. For a pair of adults, the <a href="/couple-name-combiner">Couple Name Combiner</a> keeps the simple joins and adds hyphenated options. For pets that need a short call name, {nicknameBuilt ? <>try the <a href="/nickname-generator">Nickname Generator</a>.</> : <>pick the shortest blend on the list.</>}</p>
+        </section>
+
+        <section aria-labelledby="free">
+          <h2 id="free" class="mb-4">A free, online tool with unique results</h2>
+          <p>This is a browser tool, not an app: nothing to download, no signup and no cost, on a phone in a waiting room or on a laptop. Blends are more distinctive than names picked from a list. A name like Adihan is unlikely to be shared by many other children in a classroom.</p>
+          <p>Unique is not the same as suitable, though. Before you settle, look up how common your favourite candidates are using the US Social Security Administration’s public baby names data, and search a few of them online to see what comes up.</p>
+        </section>
+
+        <section aria-labelledby="choose">
+          <h2 id="choose" class="mb-4">How to choose the right combined baby name</h2>
+          <p>A generated list is the starting line. These checks separate a fun blend from a name your child will be glad to have:</p>
+          <ul class="mt-4 list-disc space-y-3 pl-5 marker:text-accent">
+            <li><strong class="text-ink">Say it with the last name.</strong> Speak the full name aloud, then again as if calling it across a park. Watch for clashes where the first name ends in the same sound the surname begins with.</li>
+            <li><strong class="text-ink">Check the initials.</strong> Write out first, middle and last initials together and make sure they do not spell something awkward.</li>
+            <li><strong class="text-ink">Think about nicknames.</strong> Every name gets shortened. Decide whether you like the likely nickname, and whether it is one you would not want.</li>
+            <li><strong class="text-ink">Test the spelling.</strong> Ask someone to write it down after hearing it once. If they get it wrong, your child will explain the spelling many times a year.</li>
+            <li><strong class="text-ink">Look up the meaning elsewhere.</strong> Search the name to see whether it means something else in another language.</li>
+            <li><strong class="text-ink">Run it by family.</strong> You do not need approval, but a grandparent’s honest reaction to how they pronounce it is useful information.</li>
+            <li><strong class="text-ink">Wait a week.</strong> Keep a shortlist in your phone and see which names still feel right after seven days.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="why">
+          <h2 id="why" class="mb-4">Why it suits names for a child</h2>
+          <p>A baby name is not a username, so this tool does not behave like the others on the site. It drops joins that read as two names, caps results at nine letters, and offers a middle-name mode that keeps one parent’s name whole. List your other children and it nudges the results toward their style.</p>
+          <p>The sound preference (gender-neutral, or traditionally feminine or masculine) filters by ending sound only. It is a preference, not a rule, and any name suits any child. Everything comes from written rules, so we can tell you how any name was made, which is more than a tool that only says “AI.”</p>
+          <p>Some baby name sites ask you to register before you can keep a shortlist. Here you save with one tap, and Share sends the list through your phone’s share sheet, or by WhatsApp, X, Facebook, Email or Copy on a computer. Grandparents receive plain text and a link, and they need no account or app.</p>
+        </section>
+
+        <section aria-labelledby="faq">
+          <h2 id="faq" class="mb-6">Baby Name Combiner FAQ</h2>
+          <div class="space-y-6">
+            {faqs.map((f) => (
+              <div>
+                <h3 class="mb-2 text-ink">{f.q}</h3>
+                <p>{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="related">
+          <h2 id="related" class="mb-6">After the baby name: other tools to try</h2>
+          <ul class="grid gap-4 sm:grid-cols-3">
+            {related.map((r) => (
+              <RelatedToolCard tool={r.tool} line={r.line} />
+            ))}
+          </ul>
+        </section>
+      </article>
+    </div>
+  </ToolThemeWrapper>
+</BaseLayout>

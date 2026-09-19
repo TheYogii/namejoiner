@@ -1,0 +1,87 @@
+---
+import { Menu, X, ChevronDown } from '@lucide/astro';
+import ToolMenuRows from './ToolMenuRows.astro';
+import { primaryTools, moreTools } from '../data/tools';
+
+// Static builds use format: 'file', so the pathname can end in .html; strip that and any trailing slash.
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '');
+const isCurrent = (slug: string) => path === `/${slug}`;
+// The dropdown trigger is "active" when the current page is one of the tools inside it.
+const moreActive = moreTools.some((t) => isCurrent(t.slug));
+// Two columns once the dropdown holds more than three tools; a single narrow column below that.
+const twoColumns = moreTools.length > 3;
+---
+<header class="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+    <a href="/" class="inline-flex shrink-0 items-center">
+      <img src="/logo.png" alt="NameJoiner home" width="1562" height="781" fetchpriority="high" decoding="async" class="h-9 w-auto md:h-11 lg:h-12" />
+    </a>
+
+    <nav aria-label="Main" class="hidden md:block">
+      <ul class="flex items-center gap-1 lg:gap-2">
+        {primaryTools.map((t) => (
+          <li>
+            <a
+              href={`/${t.slug}`}
+              aria-current={isCurrent(t.slug) ? 'page' : undefined}
+              class="inline-flex min-h-10 items-center whitespace-nowrap px-3 text-sm font-medium text-ink hover:text-accent-dark aria-[current=page]:font-bold aria-[current=page]:text-accent-dark lg:px-4"
+            >
+              <span class="lg:hidden">{t.short ?? t.name}</span>
+              <span class="hidden lg:inline">{t.name}</span>
+            </a>
+          </li>
+        ))}
+        <li class="relative" data-tools-menu>
+          <button
+            type="button" data-tools-trigger id="tools-trigger" aria-expanded="false" aria-controls="tools-panel"
+            data-active={moreActive ? 'true' : undefined}
+            class="inline-flex min-h-10 items-center gap-1.5 whitespace-nowrap px-3 text-sm font-medium text-ink hover:text-accent-dark data-[active=true]:font-bold data-[active=true]:text-accent-dark lg:px-4 [&[aria-expanded=true]_svg]:rotate-180"
+          >
+            More Tools
+            <ChevronDown size={16} strokeWidth={1.75} aria-hidden="true" class="transition-transform" />
+          </button>
+          <div
+            id="tools-panel" data-tools-panel data-open="false"
+            class:list={[
+              'absolute right-0 top-full z-50 mt-2 max-h-[calc(100dvh-5rem)] overflow-y-auto overflow-x-hidden whitespace-normal rounded-2xl border border-line bg-white p-2 shadow-[0_12px_32px_-16px_rgba(44,36,32,0.25)]',
+              // Wide enough that the longest description wraps to at most two lines. Right-anchored, so it grows leftward and never off-screen.
+              twoColumns ? 'w-[min(58rem,calc(100vw-3rem))]' : 'w-[min(28rem,calc(100vw-3rem))]',
+            ]}
+          >
+            <ul class:list={['grid grid-cols-1 gap-1', twoColumns && 'sm:grid-cols-2']} aria-label="More tools">
+              <ToolMenuRows tools={moreTools} path={path} />
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <button type="button" id="nav-toggle" class="inline-flex size-11 items-center justify-center rounded-full text-ink hover:bg-accent-bg md:hidden"
+      aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+      <Menu size={24} strokeWidth={1.75} class="icon-open" aria-hidden="true" />
+      <X size={24} strokeWidth={1.75} class="icon-close hidden" aria-hidden="true" />
+    </button>
+  </div>
+
+  <nav id="mobile-nav" aria-label="Mobile" data-open="false" class="mobile-nav bg-paper md:hidden">
+    <div>
+      <div class="max-h-[calc(100dvh-4rem)] overflow-y-auto overflow-x-hidden border-t border-line">
+        <div class="mx-auto max-w-6xl px-4 py-3 sm:px-6">
+          <p class="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-ink-soft">Tools</p>
+          <ul>
+            <ToolMenuRows tools={primaryTools} path={path} />
+          </ul>
+          <p class="mt-2 border-t border-line px-3 pb-1 pt-4 text-xs font-semibold uppercase tracking-wide text-ink-soft">More Tools</p>
+          <ul>
+            <ToolMenuRows tools={moreTools} path={path} />
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  import { initHeaderNav } from '../scripts/header-nav';
+  initHeaderNav();
+</script>

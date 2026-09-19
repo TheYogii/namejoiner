@@ -1,0 +1,83 @@
+/* Per-tool accent themes. --accent-mid is the button gradient's light stop (primary-dark blended 35% toward the primary), and
+   --accent-glow is the primary at 24% opacity for focus rings. Both are precomputed so no browser needs color-mix to render them.
+   Per-tool accent themes. Add one block per new tool.
+   Text on tinted or white surfaces must use --accent-dark (AA); --accent is for fills, borders, large text. */
+:root {
+  /* Neutral site theme, used wherever a page has no tool theme (homepage, static pages). It is the teal from the logo, so it reads as
+     the brand rather than as any one tool. --accent-dark is the AA text and link color (7:1 on the page background). */
+  --accent-bg: #fffbf9;
+  --accent: #0a8aa6;
+  --accent-dark: #005f73;
+  --accent-mid: #046e85;
+  --accent-glow: rgb(10 138 166 / 0.24);
+  --accent-2: #6b5d56;
+  --accent-2-dark: #2c2420;
+  --pill-a: #e2f1f4;
+  --pill-b: #f3ebe6;
+}
+[data-theme='couple'] {
+  --accent-bg: #fff5f9;
+  --accent: #ff006e;
+  --accent-dark: #b8004a;
+  --accent-mid: #d10057;
+  --accent-glow: rgb(255 0 110 / 0.24);
+  --accent-2: #ff85b3;
+  --accent-2-dark: #a3244f;
+  --pill-a: #ffe4ef;
+  --pill-b: #ffd0e4;
+}
+[data-theme='baby'] {
+  --accent-bg: #f7fbf9;
+  --accent: #1d9e75;
+  --accent-dark: #0f6e56;
+  --accent-mid: #147f61;
+  --accent-glow: rgb(29 158 117 / 0.24);
+  --accent-2: #ef9f27;
+  --accent-2-dark: #854f0b;
+  --pill-a: color-mix(in srgb, #1d9e75 12%, white);
+  --pill-b: color-mix(in srgb, #ef9f27 16%, white);
+}
+[data-theme='business'] {
+  --accent-bg: #f7f9fb;
+  --accent: #378add;
+  --accent-dark: #185fa5;
+  --accent-mid: #236eb9;
+  --accent-glow: rgb(55 138 221 / 0.24);
+  --accent-2: #5f5e5a;
+  --accent-2-dark: #2c2c2a;
+  --pill-a: color-mix(in srgb, #378add 12%, white);
+  --pill-b: color-mix(in srgb, #5f5e5a 12%, white);
+}
+[data-theme='gamertag'] {
+  --accent-bg: #f9f7fe;
+  --accent: #7f77dd;
+  --accent-dark: #534ab7;
+  --accent-mid: #625ac4;
+  --accent-glow: rgb(127 119 221 / 0.24);
+  --accent-2: #1d9e75;
+  --accent-2-dark: #0f6e56;
+  --pill-a: color-mix(in srgb, #7f77dd 12%, white);
+  --pill-b: color-mix(in srgb, #1d9e75 12%, white);
+}
+[data-theme='username'] {
+  --accent-bg: #fdf7fa;
+  --accent: #d4537e;
+  --accent-dark: #72243e;
+  --accent-mid: #943454;
+  --accent-glow: rgb(212 83 126 / 0.24);
+  --accent-2: #378add;
+  --accent-2-dark: #185fa5;
+  --pill-a: color-mix(in srgb, #d4537e 12%, white);
+  --pill-b: color-mix(in srgb, #378add 12%, white);
+}
+[data-theme='nickname'] {
+  --accent-bg: #fafbf0;
+  --accent: #7c9a2d;
+  --accent-dark: #4b5f14;
+  --accent-mid: #5c741d;
+  --accent-glow: rgb(124 154 45 / 0.24);
+  --accent-2: #e0a030;
+  --accent-2-dark: #7a4e0a;
+  --pill-a: color-mix(in srgb, #7c9a2d 14%, white);
+  --pill-b: color-mix(in srgb, #e0a030 16%, white);
+}

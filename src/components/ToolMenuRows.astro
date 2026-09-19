@@ -1,0 +1,43 @@
+---
+import ToolIcon from './ToolIcon.astro';
+import type { Tool } from '../data/tools';
+
+interface Props {
+  tools: Tool[];
+  /** Current pathname without a trailing slash, used to mark the active tool. */
+  path: string;
+}
+const { tools, path } = Astro.props;
+---
+{tools.map((t) => {
+  const active = path === `/${t.slug}`;
+  const chip = 'flex size-10 shrink-0 items-center justify-center rounded-xl bg-pill-a text-accent-dark';
+  return (
+    <li data-theme={t.theme}>
+      {t.built ? (
+        <a
+          href={`/${t.slug}`}
+          aria-current={active ? 'page' : undefined}
+          class="flex items-start gap-3 rounded-xl p-3 hover:bg-accent-bg aria-[current=page]:bg-accent-bg aria-[current=page]:ring-1 aria-[current=page]:ring-accent/40"
+        >
+          <span class={chip}><ToolIcon icon={t.icon} size={20} /></span>
+          <span class="min-w-0 flex-1">
+            <span class="block text-sm font-semibold text-ink">{t.name}</span>
+            <span class="mt-0.5 block text-pretty text-sm leading-5 text-ink-soft">{t.description}</span>
+          </span>
+        </a>
+      ) : (
+        <div aria-disabled="true" class="flex cursor-not-allowed items-start gap-3 rounded-xl p-3 opacity-70">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-line text-ink-soft"><ToolIcon icon={t.icon} size={20} /></span>
+          <span class="min-w-0 flex-1">
+            <span class="flex items-center gap-2 text-sm font-semibold text-ink">
+              {t.name}
+              <span class="rounded-full bg-line px-2 py-0.5 text-xs font-medium text-ink-soft">Coming soon</span>
+            </span>
+            <span class="mt-0.5 block text-pretty text-sm leading-5 text-ink-soft">{t.description}</span>
+          </span>
+        </div>
+      )}
+    </li>
+  );
+})}

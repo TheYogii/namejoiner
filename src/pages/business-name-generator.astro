@@ -1,0 +1,191 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolThemeWrapper from '../components/ToolThemeWrapper.astro';
+import RelatedToolCard from '../components/RelatedToolCard.astro';
+import BusinessNameTool from '../components/BusinessNameTool';
+import { Briefcase } from '@lucide/astro';
+import { toolBySlug } from '../data/tools';
+
+const title = 'Business Name Generator for Blending Keywords Into Brands';
+const description =
+  'Free business name generator that blends keywords or founder names into brand names. Check .com availability in one click. No signup, runs in your browser.';
+const path = '/business-name-generator';
+const url = `https://namejoiner.com${path}`;
+
+const faqs = [
+  {
+    q: 'What is a business name generator that uses keywords?',
+    a: 'It takes words you supply, such as an industry term and a quality word, and builds names from them instead of inventing names from nothing. Here that means blending the two words together, joining them whole, or adding a familiar prefix or suffix like Get or Labs. Because the names come from your own keywords, they tend to stay relevant to what you sell.',
+  },
+  {
+    q: 'Is there any AI behind these business names?',
+    a: 'None. The tool is a rule-based word-blending algorithm, chosen deliberately so that the same two words always give the same list, each name traces back to a named technique, and nothing leaves your browser. What you give up is market knowledge: it cannot tell whether a name will appeal to your customers, and that call stays with you.',
+  },
+  {
+    q: 'Can I combine co-founder names instead of keywords?',
+    a: 'Yes. Enter one founder’s name in each box and you get blends such as Madev from Maya and Dev, plus joins like MayaDev. It works best with first names or short surnames of about four to seven letters, since very long names leave fewer clean cut points.',
+  },
+  {
+    q: 'Will the generated name be trademark-safe or available as a domain?',
+    a: 'Not necessarily, and no name generator can promise it. The “Check .com” button opens a Namecheap search so you can see whether the domain is free right now, but that is not a trademark clearance. Before you commit, search the USPTO trademark database and your state business registry, and consider asking a trademark attorney if the name will carry real money.',
+  },
+  {
+    q: 'What does the business name generator cost, and is there a signup?',
+    a: 'It costs nothing and asks for no account or email address, and there is no limit on how many word pairs you try. Blending happens in your browser, so the words you enter are not stored. Some domain links may become affiliate links in future; if so, that will be disclosed beside the tool, and it will never add to your cost.',
+  },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'NameJoiner Business Name Generator',
+    url,
+    description:
+      'A free online business name generator that blends two keywords or founder names into brand name ideas, with short, brandable and compound styles and one-click .com search links.',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Any (runs in a web browser)',
+    browserRequirements: 'Requires JavaScript',
+    isAccessibleForFree: true,
+    inLanguage: 'en',
+    dateModified: '2026-09-18',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+
+const related = [
+  { slug: 'couple-name-combiner', line: 'Blend two founders’ names, or you and a partner, into a shared name.' },
+  { slug: 'baby-name-combiner', line: 'Same blending engine, tuned for parents’ names and baby name ideas.' },
+  { slug: 'username-generator', line: 'Find a matching social handle once you have picked a name.' },
+  { slug: 'nickname-generator', line: 'Shorten a long company name into something friendly.' },
+]
+  .map((r) => ({ ...r, tool: toolBySlug(r.slug) }))
+  .filter((r) => r.tool.built); // unbuilt tools reappear here once built
+---
+<BaseLayout {title} {description} {path} theme="business" {schema} ogImageAlt="Business Name Generator by NameJoiner: combine two words into a brand name">
+  <ToolThemeWrapper theme="business">
+    <div class="mx-auto max-w-6xl px-4 pb-8 pt-12 sm:px-6 sm:pt-16">
+
+      <header>
+        <p class="inline-flex items-center gap-2 rounded-full bg-pill-a px-3 py-1 text-sm font-medium text-accent-dark">
+          <Briefcase size={14} strokeWidth={1.75} aria-hidden="true" /> Free tool for founders
+        </p>
+        <h1 class="mt-4">Turn two words into a brand name with this Business Name Generator</h1>
+        <div class="prose-body mt-5 text-lg">
+          <p>
+            Got two words and no name? This business name generator combines them into brand name ideas. It works as a business name generator from keywords: type an industry word such as “pixel” and a quality word such as “craft”, and NameJoiner blends them, joins them and adds common brand prefixes and suffixes.
+          </p>
+          <p>
+            It is a transparent word-blending algorithm, not AI, so the same input always gives the same list and you can see which rule produced each name. It is built for founders, indie hackers and side-project makers who want a fast brainstorming partner. Treat the results as raw material for a shortlist. They are not domain or trademark clearance, and you will want to check both before you commit.
+          </p>
+        </div>
+      </header>
+
+      <section class="mt-10" aria-label="Business name generator tool">
+        <BusinessNameTool client:visible />
+      </section>
+
+      <article class="prose-body mt-16 space-y-14">
+
+        <section aria-labelledby="how">
+          <h2 id="how" class="mb-4">Inside the word-blending algorithm</h2>
+          <p>This tool uses rule-based word blending, not AI, and that is a feature. It is instant, it runs entirely in your browser, and nothing is a black box: every name on the list comes from a technique you can read about right here. Hover over a result and it tells you which one made it.</p>
+          <h3 class="mb-2 mt-6">Blending two words into one</h3>
+          <p>The core technique is the portmanteau: the front of one word attached to the back of the other, the way “Pinterest” joins “pin” and “interest”. The tool tries every cut point in both directions. It also splits each word into approximate syllables and recombines them, weaves letters from both words together, and builds around any sound the two words share.</p>
+          <h3 class="mb-2 mt-6">Compounds, prefixes and suffixes</h3>
+          <p>The Compound style keeps both words whole: PixelCraft and CraftPixel. It then adds the brand patterns founders reach for most, with the prefixes Get, Try and Go and the suffixes Labs, Hub, HQ, Works, Studio, Co and Kit. No single prefix or suffix fills more than three slots, so the list stays varied.</p>
+          <h3 class="mb-2 mt-6">Ranking and filtering</h3>
+          <p>Every blend is scored on how easy it is to say, since a name nobody can pronounce is a name nobody can recommend. Awkward consonant clusters, stacked vowels and stray repeats push a result down or remove it. Hyphenated results are dropped because they make poor domains, and blends stay between four and twelve letters.</p>
+          <h3 class="mb-2 mt-6">What it cannot do</h3>
+          <p>The algorithm knows spelling and sound, not your market. It cannot tell you whether a name suits your customers, whether a competitor uses it, or whether the domain is free. That is why each result has a domain-search button, and why the checklist further down matters.</p>
+        </section>
+
+        <section aria-labelledby="keywords">
+          <h2 id="keywords" class="mb-4">Combining keywords into a business name</h2>
+          <p>If you searched for a business name generator using keywords, start with two kinds of word: a concrete noun for what you do, and a word for how you want customers to feel. Say you are building a design tool. “Pixel” is the noun and “Craft” is the feeling of care.</p>
+          <p>Enter those two and the Brandable style returns invented blends such as Pixaft, Craxel and Crafixel, while Compound gives PixelCraft, GetPixel and PixelStudio. Some will sound better than others, so scan for the two or three you would happily say on a sales call.</p>
+          <p>A few habits help: keep each keyword to about four to seven letters, try both word orders, and swap in synonyms, such as “forge” or “make” for “craft”, to get a fresh set. Avoid pairing two generic words, because the result tends to sound like everyone else.</p>
+        </section>
+
+        <section aria-labelledby="cofounders">
+          <h2 id="cofounders" class="mb-4">Blending co-founder names into a company name</h2>
+          <p>Name blends have a long business history. Adidas comes from founder Adi Dassler’s nickname and surname, and Haribo joins the initials of Hans Riegel with the city of Bonn. Two founders can do the same by entering one name per box. Maya and Dev, for example, yield Madev and Mayev, alongside joins like MayaDev.</p>
+          <p>Decide together whose name leads, and base it on how the blend sounds, not on seniority. A name that reads as one founder’s brand can create friction later. Blends that keep a clear piece of each name feel shared, which is worth having when equity and roles are still being discussed. Keep the naming conversation separate from that one, though.</p>
+        </section>
+
+        <section aria-labelledby="startup">
+          <h2 id="startup" class="mb-4">Startup name ideas</h2>
+          <p>If you searched for a startup name generator, this is the same tool and the same engine, so there is no separate startup mode. What changes is how you use it. Startup names lean short and invented, so open the Short and Brandable styles first. Pair your product’s core concept with a simple adjective, or a founder name with an industry word.</p>
+          <p>Think about your future too. A name tied tightly to today’s product, like a literal feature description, gets awkward if you pivot. An invented blend leaves more room to grow, and it is often easier to secure as a domain.</p>
+        </section>
+
+        <section aria-labelledby="available">
+          <h2 id="available" class="mb-4">Checking if your name is actually available</h2>
+          <p>A name is only useful if you can use it. Work through three checks before you fall in love.</p>
+          <p><strong class="text-ink">Domain.</strong> The “Check .com” button beside each result opens a Namecheap search in a new tab. Availability changes fast, so treat it as a first look. If the .com is taken, look at what is actually on it: an active competitor is a red flag, while an empty parked page is only an obstacle.</p>
+          <p><strong class="text-ink">Social handles.</strong> Search the name on the platforms your customers use, and try to claim the same handle everywhere.</p>
+          <p><strong class="text-ink">Trademarks and registration.</strong> Search the US Patent and Trademark Office’s free trademark search for the name and close spellings in your industry, then check your state’s business registry. This is general information, not legal advice. If the brand will carry serious investment, a trademark attorney is worth the fee.</p>
+        </section>
+
+        <section aria-labelledby="free">
+          <h2 id="free" class="mb-4">A free online tool with no signup</h2>
+          <p>Whatever you call it, a brand name generator or a company name generator, this one is free and works in the browser. There is nothing to download and no account to create. You can run as many word pairs as you like, and the words you type stay on your device.</p>
+        </section>
+
+        <section aria-labelledby="choose">
+          <h2 id="choose" class="mb-4">How to choose the right business name</h2>
+          <p>A list of options is the starting point. Use these checks to narrow it down:</p>
+          <ul class="mt-4 list-disc space-y-3 pl-5 marker:text-accent">
+            <li><strong class="text-ink">Say it aloud.</strong> Read it in a sentence such as “I work at ___”. If you stumble, customers will too.</li>
+            <li><strong class="text-ink">Run the phone test.</strong> Tell someone the name once and ask them to type it. If they guess a different spelling, you will lose visitors.</li>
+            <li><strong class="text-ink">Look for accidental words.</strong> Make sure the name is not a real word, slang term or word in another language that you would not want attached to your brand.</li>
+            <li><strong class="text-ink">Check availability.</strong> Confirm the domain and handles, then search trademarks. Do it before you have a logo, not after.</li>
+            <li><strong class="text-ink">Look at it written down.</strong> Type it in lowercase and capitals. Letter pairs such as “rn” and “m” can blur in small print.</li>
+            <li><strong class="text-ink">Ask outsiders.</strong> Show your shortlist to five people who are not friends or family, and note which name they remember tomorrow.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="why">
+          <h2 id="why" class="mb-4">Built for shortlisting, with the honest caveats</h2>
+          <p>Naming a business means checking things, so this tool is built around the checking:</p>
+          <ul class="mt-3 list-disc space-y-2 pl-5">
+            <li>Blends, plus brand-style prefixes and suffixes like Get, Try or Labs, filtered by Short, Brandable or Compound.</li>
+            <li>A Check .com button on every result, because we cannot see live domain or trademark records and will not pretend to.</li>
+            <li>Written rules instead of a model, so there is no mystery about where a name came from.</li>
+          </ul>
+          <p class="mt-3">Nothing stands between you and the tool: no popups, no account and no paywall, which is not true of every generator, and some hide how theirs works. Your working title stays in your browser. Save candidates as you go, then Share the shortlist. On mobile the native share sheet opens, and on desktop a small dialog lists the quick-share links. A co-founder can read it without signing up for anything.</p>
+        </section>
+
+        <section aria-labelledby="faq">
+          <h2 id="faq" class="mb-6">Business Name Generator FAQ</h2>
+          <div class="space-y-6">
+            {faqs.map((f) => (
+              <div>
+                <h3 class="mb-2 text-ink">{f.q}</h3>
+                <p>{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="related">
+          <h2 id="related" class="mb-6">Tools that pair well with your brand name</h2>
+          <ul class="grid gap-4 sm:grid-cols-3">
+            {related.map((r) => (
+              <RelatedToolCard tool={r.tool} line={r.line} />
+            ))}
+          </ul>
+        </section>
+      </article>
+    </div>
+  </ToolThemeWrapper>
+</BaseLayout>

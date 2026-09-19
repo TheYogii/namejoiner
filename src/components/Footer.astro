@@ -1,0 +1,33 @@
+---
+import { tools } from '../data/tools';
+const year = new Date().getFullYear();
+const legal = [
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+  { href: '/privacy-policy', label: 'Privacy Policy' },
+  { href: '/terms-of-service', label: 'Terms of Service' },
+];
+---
+<footer class="mt-24 border-t border-line bg-paper">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 pb-8 pt-12 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr]">
+    <div>
+      <a href="/" class="inline-flex">
+        <img src="/logo.png" alt="NameJoiner home" width="1562" height="781" loading="lazy" decoding="async" class="h-8 w-auto" />
+      </a>
+      <p class="mt-3 max-w-xs text-sm leading-6 text-ink-soft">Free tools that blend names into something new. No signup, no downloads.</p>
+    </div>
+    <nav aria-label="Tools">
+      <h2 class="text-sm font-semibold text-ink">Tools</h2>
+      <ul class="mt-3 space-y-2 text-sm">
+        {tools.map((t) => <li><a class="text-ink-soft hover:text-ink hover:underline" href={t.built ? `/${t.slug}` : '/#tools'}>{t.name}</a></li>)}
+      </ul>
+    </nav>
+    <nav aria-label="Company">
+      <h2 class="text-sm font-semibold text-ink">NameJoiner</h2>
+      <ul class="mt-3 space-y-2 text-sm">
+        {legal.map((l) => <li><a class="text-ink-soft hover:text-ink hover:underline" href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+  <p class="mx-auto max-w-6xl px-4 pb-8 text-sm text-ink-soft sm:px-6">© {year} NameJoiner. All rights reserved.</p>
+</footer>

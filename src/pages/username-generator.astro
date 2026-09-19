@@ -1,0 +1,216 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolThemeWrapper from '../components/ToolThemeWrapper.astro';
+import RelatedToolCard from '../components/RelatedToolCard.astro';
+import UsernameTool from '../components/UsernameTool';
+import { AtSign } from '@lucide/astro';
+import { toolBySlug } from '../data/tools';
+
+const title = 'Cute Username Generator – TikTok, Instagram, Snapchat, X';
+const description =
+  'Free username generator for cute, aesthetic and unique usernames, plus aesthetic fonts and symbols for your bio. TikTok, Instagram, Snapchat, X. No signup.';
+const path = '/username-generator';
+const url = `https://namejoiner.com${path}`;
+
+const gamertag = toolBySlug('gamertag-generator');
+
+const faqs = [
+  {
+    q: 'What makes a good cute username?',
+    a: 'Keep it short, soft-sounding and easy to spell, ideally six to twelve characters. Pair your name or a favorite word with a small, friendly word such as bun, pie or honey, so you get something like lunabun. Skip long strings of digits, and never use your birth year, since it gives away personal information.',
+  },
+  {
+    q: 'Can I use this for TikTok and Instagram?',
+    a: 'Yes. Pick a platform in the Platform section and the tool enforces its limit: TikTok allows up to 24 characters, Instagram 30, and X and Snapchat 15. Choosing X also removes dots, since X only accepts letters, numbers and underscores. Leave it on General to see names for every platform, each marked with where it fits.',
+  },
+  {
+    q: 'How does the “Check if taken” link work?',
+    a: 'It opens the profile page for that username on the platform you selected, in a new tab. If a profile loads, the name is probably in use. If the page says it does not exist, the name may be free, but only the platform can confirm that, because some names are reserved or banned. The link opens the page and does not check availability through any API.',
+  },
+  {
+    q: 'What does the optional interest or theme field do?',
+    a: 'It lets you add a hobby or theme, such as soccer or coffee, and blends it with your word using the same engine as our couple and business name tools. Sarah and soccer give sarah_soccer and soccer_sarah, plus blends like sarcer. Leave the field empty and you get the standard single-word names, exactly as before.',
+  },
+  {
+    q: 'What does Fancy Text do, and can I use it as my username?',
+    a: 'Fancy Text turns each result into aesthetic text for a bio or display name, using small caps, script or full-width letters with symbols like ⋆˚ and ♡. It cannot be your actual username, because Instagram, TikTok, X and Snapchat handles must stay plain letters, numbers, dots and underscores. Every result keeps a plain copy button for that reason, and some apps show empty boxes for these characters, so test a paste first.',
+  },
+  {
+    q: 'Does this work for gaming platforms?',
+    a: gamertag.built
+      ? 'It can spark ideas, but gaming platforms have their own length rules and naming conventions, so use our Gamertag Generator for Xbox, PlayStation, Roblox and Minecraft names instead. It draws on word lists written for gaming rather than social profiles.'
+      : 'It can spark ideas, but gaming platforms have their own length rules and naming conventions, and we are building a dedicated Gamertag Generator for them. Its word lists will be written for gaming rather than social profiles, which is why we keep the two tools separate.',
+  },
+  {
+    q: 'Are these usernames written by an AI?',
+    a: 'No. Your word is combined with hand-picked word lists by fixed rules, such as adding a prefix, a suffix, a separator or a spelling twist, and the results are ranked by how easy they are to say. Except in Random, the same input always returns the same list, and hovering over a name shows the technique behind it.',
+  },
+  {
+    q: 'Can I use it without an account, and is it really free?',
+    a: 'Yes to both: there is no account, no email address and no cap on how many usernames you generate. Everything runs in your browser, so the word you type never leaves your device. We cannot check availability automatically, but with a platform selected each result has a “Check if taken” link that opens that platform’s profile page in a new tab, so you can look for yourself.',
+  },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'NameJoiner Username Generator',
+    url,
+    description:
+      'A free online username generator that turns a name or word into cute, aesthetic or unique usernames for TikTok, Instagram, Snapchat and X, with a character count on every result.',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Any (runs in a web browser)',
+    browserRequirements: 'Requires JavaScript',
+    isAccessibleForFree: true,
+    inLanguage: 'en',
+    dateModified: '2026-09-19',
+    featureList: [
+      'Cute, aesthetic, unique and random username styles',
+      'Platform limits for Instagram, TikTok, Snapchat and X',
+      'Optional interest or theme word blended into each name',
+      'Aesthetic Unicode fonts and symbols for bios',
+      'Profile links to check whether a username is taken',
+    ],
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+
+const related = [
+  { slug: 'gamertag-generator', line: 'Names for Xbox, PlayStation, Roblox and Minecraft players.' },
+  { slug: 'couple-name-combiner', line: 'Blend two names into a shared handle for a couple’s account.' },
+  { slug: 'baby-name-combiner', line: 'Blend parents’ names into baby name ideas.' },
+]
+  .map((r) => ({ ...r, tool: toolBySlug(r.slug) }))
+  .filter((r) => r.tool.built); // unbuilt tools reappear here once built
+---
+<BaseLayout {title} {description} {path} theme="username" {schema} ogImageAlt="Username Generator by NameJoiner: create a cute, unique username">
+  <ToolThemeWrapper theme="username">
+    <div class="mx-auto max-w-6xl px-4 pb-8 pt-12 sm:px-6 sm:pt-16">
+
+      <header>
+        <p class="inline-flex items-center gap-2 rounded-full bg-pill-a px-3 py-1 text-sm font-medium text-accent-dark">
+          <AtSign size={14} strokeWidth={1.75} aria-hidden="true" /> Free cute username generator
+        </p>
+        <h1 class="mt-4">Need a cute username? Build one with this Username Generator</h1>
+        <div class="prose-body mt-5 text-lg">
+          <p>
+            Type a name or a favorite word, add an interest if you like, and this username generator turns it into cute, aesthetic or unique ideas you can copy in one click, with an optional aesthetic font and symbols for your bio. It works for Instagram, TikTok, Snapchat, Twitter/X and general online profiles, and every result shows its character count so you can see which platforms it fits. Want a cute username generator? Pick the Cute style and go.
+          </p>
+          <p>
+            Gaming platforms such as Xbox, PlayStation, Minecraft and Roblox have their own conventions, so they are better served by our {gamertag.built ? <a href="/gamertag-generator">Gamertag Generator</a> : 'upcoming Gamertag Generator'}. Everything here runs on hand-picked word lists and simple combining rules, not AI.
+          </p>
+        </div>
+      </header>
+
+      <section class="mt-10" aria-label="Username generator tool">
+        <UsernameTool client:visible />
+      </section>
+
+      <article class="prose-body mt-16 space-y-14">
+
+        <section aria-labelledby="how">
+          <h2 id="how" class="mb-4">From one word to twenty usernames: the method</h2>
+          <p>This is rule-based word combination, not AI. We wrote the word lists by hand, and a small set of rules combines them with your word. That keeps it fast, it runs in your browser, and there is no black box: hover over any result to see which technique made it.</p>
+          <h3 class="mb-2 mt-6">The techniques</h3>
+          <p>Your word is first cleaned to lowercase letters, and a long name also gets a short form, so “christopher” can become “chris”. The tool then tries a word before your name (tinyluna), a word after it (lunabun), a word pairing with a dot or underscore (luna_bunny), a short number tail (luna07), and, in the Unique style, spelling twists and blends. A twist might reverse the syllables, so Maya becomes Yama, or swap a “c” for a “k”.</p>
+          <h3 class="mb-2 mt-6">The styles</h3>
+          <p>Each style has its own lists. Cute draws on soft words like bun, honey and sprout, Aesthetic on velvet, dusk and lilac, and Unique on rarer words like nova, onyx and quill. Random mixes every list and changes each time you click, while the other three give the same results for the same input.</p>
+          <h3 class="mb-2 mt-6">Interest or theme</h3>
+          <p>If you fill in the optional interest field, the tool blends the two words with the shared word-blending engine (the same one behind our couple, baby and business tools) and adds joins with your style’s separators. Blends must keep the start of one word and the ending of the other, so results stay recognizable. With the field empty, nothing changes.</p>
+          <h3 class="mb-2 mt-6">Fancy text</h3>
+          <p>Fancy Text is a separate step after the names are made. It swaps each letter for a matching character in a small-caps, script or full-width set, so the plain name is always recoverable. It never changes which names are generated.</p>
+          <h3 class="mb-2 mt-6">Platforms</h3>
+          <p>Choosing Instagram, TikTok, Snapchat or X applies that platform’s length limit and character rules before anything is ranked, so a result is never too long for the platform you picked. X also loses dots, and Snapchat and X names are kept to 15 characters. General applies no filter and simply marks where each name fits.</p>
+          <h3 class="mb-2 mt-6">Ranking</h3>
+          <p>Every candidate is scored on how easy it is to say, and each chunk is checked separately so a separator cannot hide an awkward cluster. Shorter names score higher because platforms cap length. The list then rotates through the techniques so you do not get twenty near-copies. A short blocklist also removes rude combinations. The tool cannot confirm on its own whether a username is taken, but with a platform selected each result links to that profile so you can check in one click.</p>
+        </section>
+
+        <section aria-labelledby="cute">
+          <h2 id="cute" class="mb-4">Cute usernames</h2>
+          <p>A cute username usually comes down to soft sounds and small words. Names with l, m, b and open vowels feel gentle, and tiny words like bun, pie, bee and boo add a playful edge. Enter “Luna” in the Cute style and you will see tinyluna, lunabun, luna_bunny and honeyluna near the top.</p>
+          <p>Some habits keep a cute username from tipping into hard to read. Stay under about twelve characters, use one cute word rather than two, and choose an underscore over a stack of extra letters. Number tails like 07 or 11 can look neat, but avoid your birth year, because a public handle that reveals your age or birthday is a privacy risk, especially for younger users.</p>
+        </section>
+
+        <section aria-labelledby="tiktok">
+          <h2 id="tiktok" class="mb-4">Usernames for TikTok</h2>
+          <p>As a TikTok username generator, this tool keeps in mind that TikTok handles are limited to 24 characters, allow letters, numbers, underscores and periods, and cannot end in a period. Your handle is how people find and tag you, and creators often say it out loud in videos, so it has to be easy to hear and spell.</p>
+          <p>Try the Cute or Unique styles and favor results with a clear sound and no confusing letter runs. A word pairing that hints at your topic works well, such as your name next to a baking, travel or gaming word, and it helps viewers guess what your account is about. Choose TikTok in the Platform section to keep every result within 24 characters and to get a “Check if taken” link on each one. TikTok lets you change your username later, but limits how often, so check the app for current rules before you commit.</p>
+        </section>
+
+        <section aria-labelledby="aesthetic">
+          <h2 id="aesthetic" class="mb-4">Aesthetic username ideas</h2>
+          <p>If you are after an aesthetic username generator, the Aesthetic style follows the conventions people recognize: everything lowercase, dots or underscores as separators, and muted, dreamy words. Maya can become maya.moon, velvetmaya or mayacore, and the “-core” suffix has become shorthand for a whole visual mood.</p>
+          <p>The best aesthetic handles match the account. Pick a word that echoes your photo palette or writing tone, such as dusk and lilac for soft pastel feeds, or ember and noir for darker ones. Do not overload it either. One mood word plus your name reads as intentional, while three reads as a hashtag. Remember that dots are not accepted on X.</p>
+          <p>Many people searching for an aesthetic username generator font, or an aesthetic username generator with symbols, also want the decorated text you see in bios, so the Fancy Text setting turns each result into one. Small capitals look like <span aria-hidden="true">ʟᴜɴᴀ</span>, script letters like <span aria-hidden="true">𝓵𝓾𝓷𝓪</span>, and full-width letters like <span aria-hidden="true">ｌｕｎａ</span>, each wrapped in symbols such as ⋆˚ ♡ or ✧ where it suits. Aesthetic uses small capitals with sparkle symbols, Cute uses script with hearts, and Unique uses full-width letters.</p>
+          <p>These aesthetic symbols and fonts are for your bio or display name only. Usernames themselves have to stay plain letters on every platform, so each result keeps a plain copy button next to the styled one, and the profile links always use the plain name. Some apps and fonts show empty boxes for these characters, so paste a test into a draft first.</p>
+        </section>
+
+        <section aria-labelledby="instagram">
+          <h2 id="instagram" class="mb-4">Usernames for Instagram</h2>
+          <p>An Instagram username generator has to work with real limits. Instagram allows up to 30 characters, made of letters, numbers, periods and underscores. Your username appears on your profile, in tags and in your profile link, so shorter and cleaner is better for sharing.</p>
+          <p>For a personal account, a name-based handle with one small addition, such as a word or a separator, is easiest for friends to remember. For a creator or small business, put the name people already know first. Whichever you pick, choose Instagram in the Platform section: results stay within 30 characters and each gets a “Check if taken” link that opens its profile, so you can see whether the name is in use before you commit. Know that changing a username later breaks any old profile links you shared.</p>
+        </section>
+
+        <section aria-labelledby="interest">
+          <h2 id="interest" class="mb-4">Usernames based on an interest</h2>
+          <p>A name alone gives a username that could belong to anyone. Add an interest or theme, such as soccer, coffee or skating, and the tool blends your word with it instead of picking from its own word lists. Sarah and soccer give sarah_soccer, soccer_sarah and the blend sarcer, and Luna and coffee give luna_coffee and lunfee.</p>
+          <p>The two words go through the same blending engine that powers our couple and business name tools, plus joins with the separators your style uses. Short forms count too, so you also get names like sar_soc. Pick a specific interest over a broad one, since “soccer” blends better than “sports”. Leave the field empty for the standard single-word names.</p>
+        </section>
+
+        <section aria-labelledby="unique">
+          <h2 id="unique" class="mb-4">Unique and random usernames</h2>
+          <p>Common words and popular names are usually taken, and that is where Unique helps. It uses rarer words like nova and onyx, plus spelling twists, so Luna can become nalu or lunova. These are less likely to be claimed already, though you still need to check, and picking a platform adds a one-click “Check if taken” link to each result.</p>
+          <p>Random is for when you are stuck. It does not produce random letters, which would be unreadable, but shuffles across all three style lists and picks different combinations each time. Click Generate several times and keep anything that catches your eye.</p>
+        </section>
+
+        <section aria-labelledby="snapx">
+          <h2 id="snapx" class="mb-4">Usernames for Snapchat and X</h2>
+          <p>Both platforms are strict about length. X handles are limited to 15 characters, using only letters, numbers and underscores, so dots are not allowed. Snapchat usernames are also limited to 15 characters. For either one, choose Snapchat or X in the Platform section and every result is kept within 15 characters, with dots removed on X. Shorter suffix results like lunabun work especially well. Since friends often type a Snapchat name by hand, avoid letters that look alike, such as l, I and 1.</p>
+        </section>
+
+        <section aria-labelledby="gaming">
+          <h2 id="gaming" class="mb-4">Looking for a gaming username?</h2>
+          <p>Gaming platforms have different rules and a different style, so we keep them separate. {gamertag.built ? <>Our <a href="/gamertag-generator">Gamertag Generator</a> is built for Xbox, PlayStation, Roblox and Minecraft names, with word lists written for players.</> : 'We are building a dedicated Gamertag Generator for Xbox, PlayStation, Roblox and Minecraft names, with word lists written for players, and it will be linked here once it is live.'} The tool on this page is designed for social profiles, so its cute and aesthetic words will not fit a game lobby.</p>
+        </section>
+
+        <section aria-labelledby="why">
+          <h2 id="why" class="mb-4">Why a username tool needs a platform setting</h2>
+          <p>Usernames fail for boring reasons: too long, the wrong characters, already taken. So the Platform setting narrows results to the rules for Instagram, TikTok, Snapchat or X, as we understand them. Those limits are from our own notes, not a live check, and the tool says so.</p>
+          <p>Add an interest word and it blends the two instead of tacking one on the end. Style and Fancy Text are separate controls, and the plain version stays copyable beside the fancy one. Availability is the platform’s call, so each result links to the real profile page for you to check.</p>
+          <p>Plenty of username tools promise “AI” without saying what it does, or gate saving behind an account. This one runs written rules in your browser and needs no sign-in for anything. Save your favorites and press Share: your phone’s share sheet, or WhatsApp, X, Facebook, Email and Copy on desktop. Friends get text and a link, and don’t need an account either.</p>
+        </section>
+
+        <section aria-labelledby="faq">
+          <h2 id="faq" class="mb-6">Username Generator FAQ</h2>
+          <div class="space-y-6">
+            {faqs.map((f) => (
+              <div>
+                <h3 class="mb-2 text-ink">{f.q}</h3>
+                <p>{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="related">
+          <h2 id="related" class="mb-6">Where to go next</h2>
+          <ul class="grid gap-4 sm:grid-cols-3">
+            {related.map((r) => (
+              <RelatedToolCard tool={r.tool} line={r.line} />
+            ))}
+          </ul>
+        </section>
+      </article>
+    </div>
+  </ToolThemeWrapper>
+</BaseLayout>

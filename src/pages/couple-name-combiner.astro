@@ -1,0 +1,210 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolThemeWrapper from '../components/ToolThemeWrapper.astro';
+import RelatedToolCard from '../components/RelatedToolCard.astro';
+import CombinerTool from '../components/CombinerTool';
+import { Heart } from '@lucide/astro';
+import { toolBySlug } from '../data/tools';
+
+const title = 'Couple Name Combiner: Free Ship Names From Any Two Names';
+const description =
+  'Combine two names into a couple name or ship name in seconds. Free couple name combiner with cute, romantic and short options. No signup, no download.';
+const path = '/couple-name-combiner';
+const url = `https://namejoiner.com${path}`;
+const usernameBuilt = toolBySlug('username-generator').built;
+const nicknameBuilt = toolBySlug('nickname-generator').built;
+
+const faqs = [
+  {
+    q: 'What is a couple name combiner?',
+    a: 'It is a tool that merges two first names into a single new name by borrowing pieces of each. NameJoiner runs six blending methods on every pair and ranks the results by how easy they are to say, then lets you steer them with a vibe. You see the smoothest options first instead of a random pile of letters. It suits anyone who wants a shared name for social posts, a joint account or a wedding.',
+  },
+  {
+    q: 'Is a couple name combiner the same as a ship name generator?',
+    a: 'Yes, they do the same job with different vocabulary. “Ship” is fandom shorthand for “relationship”, so a ship name is the blended name given to a pairing, whether that pairing is real or fictional. You can type in two characters’ names here just as easily as your own; the tool works from spelling and sound, not from any story.',
+  },
+  {
+    q: 'How are couple names traditionally created?',
+    a: 'Most are portmanteaus: the beginning of one name attached to the end of another. Writer Lewis Carroll popularised the word for blended words in 1871, and celebrity magazines applied the habit to couples in the early 2000s. The usual rule of thumb is to keep the sound that begins the first name and the sound that ends the second, then say the result aloud before committing.',
+  },
+  {
+    q: 'Can I use a combined name as a wedding hashtag?',
+    a: 'Yes, and it works well because a blend is short and easy to remember. Type the hashtag in CamelCase, such as #AdiAndRohan, so screen readers can read each word, and search it on Instagram first to see whether another wedding already claimed it. If it is taken, adding your wedding year or a word like “Forever” usually makes it unique.',
+  },
+  {
+    q: 'What do the Romantic, Cute, Wedding, Ship Name and Unique vibes do?',
+    a: 'Each vibe re-ranks the same blends. Romantic favors soft, flowing sounds, Cute favors short names with soft endings, Wedding favors names that read cleanly as a hashtag and removes hyphens, Ship Name puts classic portmanteaus first, and Unique favors rarer patterns and drops simple joins. Choosing no vibe gives the standard ranking, and the Length buttons work alongside any vibe.',
+  },
+  {
+    q: 'Does the couple name combiner cost anything or need an account?',
+    a: 'It costs nothing and needs no account or email address, and there is no limit on how many pairs you try. The blending happens inside your browser, so the names you type are never sent to a server or stored anywhere. That also means it keeps working on a slow mobile connection once the page has loaded.',
+  },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'NameJoiner Couple Name Combiner',
+    url,
+    description:
+      'A free online couple name combiner and ship name generator that blends two names into up to 20 combined name ideas.',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Any (runs in a web browser)',
+    browserRequirements: 'Requires JavaScript',
+    isAccessibleForFree: true,
+    inLanguage: 'en',
+    dateModified: '2026-09-18',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+
+const related = [
+  { slug: 'baby-name-combiner', line: 'Blend both parents’ names into baby name ideas.' },
+  { slug: 'nickname-generator', line: 'Turn a name into a short, friendly nickname for your partner.' },
+  { slug: 'username-generator', line: 'Build a matching handle for your joint account or gaming duo.' },
+].map((r) => ({ ...r, tool: toolBySlug(r.slug) })).filter((r) => r.tool.built); // unbuilt tools reappear here once built
+---
+<BaseLayout {title} {description} {path} theme="couple" {schema} ogImageAlt="Couple Name Combiner by NameJoiner: blend two names into one">
+  <ToolThemeWrapper theme="couple">
+    <div class="mx-auto max-w-6xl px-4 pb-8 pt-12 sm:px-6 sm:pt-16">
+
+      <header>
+        <p class="inline-flex items-center gap-2 rounded-full bg-pill-a px-3 py-1 text-sm font-medium text-accent-2-dark">
+          <Heart size={14} strokeWidth={1.75} aria-hidden="true" /> Free ship name generator
+        </p>
+        <h1 class="mt-4">A Couple Name Combiner that turns two names into one shared name</h1>
+        <div class="prose-body mt-5 text-lg">
+          <p>
+            Two names, one shared identity. A couple name combiner takes your name and your partner’s and blends them into a single new name you can use for anniversary posts, a joint account, a wedding hashtag or an inside joke. Fans call the same thing a <strong>ship name generator</strong>, because a “ship” is a pairing, and you will also see it called a couple name generator or a relationship name combiner.
+          </p>
+          <p>
+            Type both names below and NameJoiner builds up to 20 options with six blending methods, from classic portmanteaus to syllable swaps. Choose a vibe (Romantic, Cute, Wedding, Ship Name or Unique) to steer the results, copy the ones that sound right out loud, and filter by length if you want something punchy or something longer. It works with any name written in Latin letters, and everything runs in your browser.
+          </p>
+        </div>
+      </header>
+
+      <section class="mt-10" aria-label="Couple name combiner tool">
+        <CombinerTool client:visible />
+      </section>
+
+      <article class="prose-body mt-16 space-y-14">
+
+        <section aria-labelledby="how">
+          <h2 id="how" class="mb-4">The word-building behind every blend</h2>
+          <p>Blending two names is closer to word-building than to random shuffling. The tool runs several linguistic techniques on your pair, throws away results that are hard to say, and ranks what is left. Here is what each technique does.</p>
+          <h3 class="mb-2 mt-6">Portmanteau and reverse portmanteau</h3>
+          <p>A portmanteau glues the front of one word to the back of another. “Brunch” is breakfast plus lunch, and “Bennifer” is Ben plus Jennifer. The tool tries every cut point in both names, so Rohan and Aditi produce blends like Roditi and Rohiti. The reverse version starts from the second name instead, which gives Adihan. Each result is scored on balance, so a blend that keeps a recognisable piece of both names beats one that swallows either.</p>
+          <h3 class="mb-2 mt-6">Syllable mixing</h3>
+          <p>Names are split into approximate syllables using vowel boundaries: one consonant between vowels goes with the next syllable (Jen-ni-fer), while two or more are divided. Syllables from each name are then recombined, which respects the natural rhythm of the names and gives results like Jenniben for Ben and Jennifer.</p>
+          <h3 class="mb-2 mt-6">Letter pooling</h3>
+          <p>Here the letters of both names are interleaved, or the consonants of one name are woven around the vowels of the other. Raw pooling often produces mush, so every result has to pass a pronounceability check before it reaches you.</p>
+          <h3 class="mb-2 mt-6">Shared sounds and simple compounds</h3>
+          <p>When two names share a letter or sound, the tool builds around it. Ben and Jennifer both contain an “n”, which is why Bennifer falls out naturally. Finally, the plain options, such as AditiRohan or Aditi-Rohan, are always included because sometimes the simplest version is the best.</p>
+          <p>Choosing a vibe never changes these six techniques. It re-ranks what they produce: Romantic favors soft sounds, Cute favors short names with soft endings, Wedding favors hashtag-friendly names, Ship Name puts portmanteaus first, and Unique favors rarer patterns. Each vibe can only reorder good blends, because the pronounceability check below still applies first.</p>
+          <p>The pronounceability check looks for long strings of consonants or vowels, implausible letter pairs at the start and end of a word, and awkward repeats. It is a heuristic, not a dictionary, so trust your own ear for the final call.</p>
+        </section>
+
+        <section aria-labelledby="style">
+          <h2 id="style" class="mb-4">Romantic, cute or best: picking a style</h2>
+          <p>Two controls shape the list, and they do different jobs. The <strong>Vibe</strong> buttons change which blends rise to the top, and the Length buttons filter by size: Short is about five letters or fewer, Medium is six to eight, and Long is nine or more. Try a vibe first, then narrow by length.</p>
+          <p><strong>Romantic</strong> favors soft, flowing blends with open sounds and gentle endings, so Ben and Jennifer put Bennifer first. <strong>Cute</strong> favors shorter names with soft endings and adds a few softened short blends, and Aditi and Rohan give Roti and Adany. <strong>Unique</strong> goes the other way, leaning on rarer letters and unusual patterns and dropping simple joins. Leave the vibe on Any to see everything ranked the standard way.</p>
+          <p>If you are hunting for the “best” option, look for blends where both names are still easy to spot and the seam between them disappears when you say it aloud. Those are usually the most balanced ones, and the tool ranks them near the top of each list.</p>
+        </section>
+
+        <section aria-labelledby="wedding">
+          <h2 id="wedding" class="mb-4">Couple names for weddings</h2>
+          <p>A combined name earns its keep at a wedding because it appears in so many places: the hashtag, the welcome sign, the signature cocktail, the monogram on napkins. Start with hashtag ideas: #AdiAndRohan, #RohanWedsAditi or #AdihanForever all take a blend and give it a job. Write hashtags in CamelCase, keep them under about 25 characters, and search Instagram before you print anything.</p>
+          <p>Try the Wedding vibe above. It drops hyphenated results, favors names of about six to twelve letters that read cleanly at a glance, and shows a #hashtag preview under each result.</p>
+          <p>On the invitation, a blend works best as a small flourish under the formal names, such as “Aditi &amp; Rohan, soon to be the Adihans”. It also gives guests a fun name for the couple when they raise a toast, and it gives photographers a tag for the shared album.</p>
+        </section>
+
+        <section aria-labelledby="ship">
+          <h2 id="ship" class="mb-4">Also known as: ship names</h2>
+          <p>If you arrived searching for a couple ship name generator, you are in the right place. In online fandoms, fans “ship” characters they want to see together, and the blended name became shorthand for the pairing, then for the whole community around it. Celebrity culture had already done the same thing: “Bennifer” took off in the early 2000s, “Brangelina” followed a few years later, and “Kimye” carried the habit into the social media era.</p>
+          <p>Fandoms have a few unwritten conventions. The name that sounds better leading the blend goes first, not necessarily the alphabetical or “main” character. Blends built from nicknames are common. Because this tool works from spelling and sound, it treats fictional pairings exactly like real ones, so try both orders and pick the one that flows. Choose the Ship Name vibe above to put the classic portmanteau blends first, with pooled-letter and shared-sound blends last.</p>
+          {nicknameBuilt && <p>A ship name blends two people. If you want something for just one of you, our <a href="/nickname-generator">Nickname Generator</a> turns a single name into cute, funny or cool nicknames, which is the other half of relationship name play.</p>}
+        </section>
+
+        <section aria-labelledby="social">
+          <h2 id="social" class="mb-4">Couple names for Instagram &amp; TikTok</h2>
+          <p>Shared accounts are everywhere now: the couple who posts date-night videos, the travel duo, the pair documenting a home renovation. A blended name makes a natural handle or bio line, such as “@AdiHan” or “Adi + Han, est. 2026”. Short, pronounceable blends work better as usernames because people have to type them from memory, say them in a video, and spot them in a tagged photo. Aim for about six to ten characters with no awkward letter clusters.</p>
+          <p>Before you fall for one, check it on Instagram, TikTok, YouTube and X, since a handle that is free on one platform is often taken on another. Grab the same handle everywhere if you can, and {usernameBuilt ? <>use our <a href="/username-generator">Username Generator</a> for variations</> : <>try a small variation</>} when your first pick is gone.</p>
+        </section>
+
+        <section aria-labelledby="indian">
+          <h2 id="indian" class="mb-4">Blending Indian names</h2>
+          <p>Indian names are often three or four syllables long (Priyanka, Aishwarya, Abhishek), and that length is an advantage: there are more natural places to cut. The syllable mixing technique tends to shine here. The tool also treats aspirated sounds such as bh, dh, kh, gh, th, ph and sh as a single consonant, so Abhishek is never chopped in the middle of “bh”.</p>
+          <p>Two habits help. First, try the short form of each name, such as Adi for Aditi, since a blend of two short forms is easier to say than a blend of two long names. Second, use the spelling you actually write, because Aishwarya and Aishvarya have different letters and will blend differently. Names ending in a vowel tend to blend smoothly with names ending in a consonant, so Aditi and Rohan yield both Adihan and Rohiti; compare both aloud.</p>
+        </section>
+
+        <section aria-labelledby="meaning">
+          <h2 id="meaning" class="mb-4">Names with combined meaning</h2>
+          <p>The tool joins sounds, not dictionary definitions, but you can still choose blends that carry meaning from both names. Names are often built from roots, and the first syllable usually holds the most recognisable one. Aditi means “boundless” and Rohan means “ascending”, so a blend that keeps “Adi” and “han” can be read as “boundless ascent”, which is a lovely story to tell at the wedding.</p>
+          <p>To pick with meaning in mind, look up each name’s origin first, then choose the result that keeps at least the opening sound of both. Also do a quick search on the finished blend, in case it means something unfortunate in another language or is already a brand name.</p>
+        </section>
+
+        <section aria-labelledby="baby">
+          <h2 id="baby" class="mb-4">From couple name to baby name</h2>
+          <p>Many parents-to-be discover that the same blends they made for fun could name a baby girl or a baby boy. A combined couple name works well as a middle name, as a pregnancy nickname, or as inspiration for a first name that quietly honours both parents. If that is where your search is heading, our <a href="/baby-name-combiner">Baby Name Combiner</a> applies the same ideas with baby-friendly filters.</p>
+          <p>A word of caution: a couple name that sounds adorable between adults can be a mouthful for a child. Say the candidate name next to your surname, imagine it called across a playground, and check that the initials do not spell anything odd.</p>
+        </section>
+
+        <section aria-labelledby="free">
+          <h2 id="free" class="mb-4">A free online tool, updated for 2026</h2>
+          <p>This is a web tool, not an app. There is nothing to download, and it works in the browser on your phone, tablet or laptop. You can add the page to your home screen if you want app-style access. There is no signup, and no email is needed to copy a result.</p>
+          <p>Because the logic runs on your device, your names stay with you. We review the tool and this guide regularly; the latest revision is from September 2026, and it covers refinements to the pronounceability scoring and to how names with digraphs are split.</p>
+        </section>
+
+        <section aria-labelledby="choose">
+          <h2 id="choose" class="mb-4">How to choose the right combined name</h2>
+          <p>Generating options is the easy half. These checks help you pick one that lasts:</p>
+          <ul class="mt-4 list-disc space-y-3 pl-5 marker:text-accent">
+            <li><strong class="text-ink">Say it aloud, fast.</strong> A name that trips your tongue in a sentence will annoy you within a week.</li>
+            <li><strong class="text-ink">Check the handles.</strong> Search Instagram, X and TikTok, and check a .com domain if you want a joint website, before you get attached.</li>
+            <li><strong class="text-ink">Make sure both people are visible.</strong> If either of you cannot spot your own name in the blend, it will feel like a nickname for only one of you.</li>
+            <li><strong class="text-ink">Test the meaning elsewhere.</strong> Search the blend to see whether it means something else in another language or belongs to a brand.</li>
+            <li><strong class="text-ink">Get real buy-in.</strong> Each of you should pick a private top three, then compare. Matching picks are a strong sign; a veto from either person is final.</li>
+            <li><strong class="text-ink">Try it for a week.</strong> Use it in your chats or captions before you print it on anything.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="why">
+          <h2 id="why" class="mb-4">What sets this ship name generator apart</h2>
+          <p>Most couple name tools run one blend and hand you a list. This one lets you steer it. The Vibe selector shifts which of the six blending techniques rise to the top for the mood you want, from sweet to one-of-a-kind, and the Length filter keeps results short enough for a hashtag or long enough for a wedding sign. Hover any name and it tells you which technique made it.</p>
+          <p>Some name generators say “AI” without showing what happens inside, or want an account before you can keep anything. Here the rules are written out and your names stay in your browser. Save the blends you love, then press Share: a phone opens its share sheet, and a laptop offers WhatsApp, X, Facebook, Email or Copy. Your partner gets plain text and a link, with nothing to sign up for or install.</p>
+        </section>
+
+        <section aria-labelledby="faq">
+          <h2 id="faq" class="mb-6">Couple Name Combiner FAQ</h2>
+          <div class="space-y-6">
+            {faqs.map((f) => (
+              <div>
+                <h3 class="mb-2 text-ink">{f.q}</h3>
+                <p>{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="related">
+          <h2 id="related" class="mb-6">More ways to play with names</h2>
+          <ul class="grid gap-4 sm:grid-cols-3">
+            {related.map((r) => (
+              <RelatedToolCard tool={r.tool} line={r.line} />
+            ))}
+          </ul>
+        </section>
+      </article>
+    </div>
+  </ToolThemeWrapper>
+</BaseLayout>
