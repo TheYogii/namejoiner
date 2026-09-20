@@ -73,7 +73,7 @@ const schema = [
   <section class="mx-auto max-w-6xl px-4 pb-12 pt-16 sm:px-6 sm:pt-24">
     <p class="text-sm font-medium text-accent-dark">Free name tools</p>
     <h1 class="mt-3">Blend names into something new</h1>
-    <p class="mt-5 text-base leading-7 text-ink-soft sm:text-lg sm:leading-8">
+    <p class="mt-5 text-base leading-[1.55] text-ink-soft sm:text-lg sm:leading-8">
       NameJoiner is a small collection of free tools that mix two names, or a handful of words, into fresh options you can copy and use.
     </p>
     <div class="mt-8">
@@ -96,7 +96,7 @@ const schema = [
           {i < steps.length - 1 && <span class="tl-line absolute bg-accent/40" aria-hidden="true"></span>}
           <div class="tl-body mx-auto mt-4 max-w-xs">
             <h3 class="text-lg">{st.title}</h3>
-            <p class="mt-2 text-base leading-7 text-ink-soft">{st.text}</p>
+            <p class="mt-2 text-base leading-[1.55] text-ink-soft sm:leading-7">{st.text}</p>
           </div>
         </li>
       ))}
@@ -109,22 +109,22 @@ const schema = [
       {reasons.map((r) => (
         <li>
           <h3 class="text-lg">{r.title}</h3>
-          <p class="mt-1 text-base leading-7 text-ink-soft">{r.text}</p>
+          <p class="mt-1 text-base leading-[1.55] text-ink-soft sm:leading-7">{r.text}</p>
         </li>
       ))}
     </ul>
-    <p class="mt-8 rounded-[16px] border border-line bg-white p-5 text-base leading-7 text-ink-soft">
+    <p class="mt-8 rounded-[16px] border border-line bg-white p-5 text-base leading-[1.55] text-ink-soft sm:leading-7">
       <strong class="text-ink">How this compares with other name tools.</strong> Some generators say “AI” without explaining what it does, some ask for an account before you can save or share, and some put the tool behind popups. NameJoiner takes the plainer route: the rules are disclosed, every feature works without an account, and the tool is the first thing on the page.
     </p>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 pb-8 pt-12 sm:px-6" aria-labelledby="which-heading">
     <h2 id="which-heading" class="mb-2">Which tool do you need?</h2>
-    <p class="mb-6 text-base leading-7 text-ink-soft">Not sure where to start? Find what you are naming and follow the link.</p>
+    <p class="mb-6 text-base leading-[1.55] text-ink-soft sm:leading-7">Not sure where to start? Find what you are naming and follow the link.</p>
     <ul class="space-y-3">
       {needs.map((r) => (
         <li data-theme={r.tool.theme} class="card group relative flex flex-col gap-4 p-5 transition-colors hover:border-accent sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-          <p class="text-base leading-7 text-ink-soft">{r.need}</p>
+          <p class="text-base leading-[1.55] text-ink-soft sm:leading-7">{r.need}</p>
           <a
             href={`/${r.slug}`}
             class="inline-flex min-h-11 shrink-0 items-center gap-2 self-start whitespace-nowrap rounded-full bg-pill-a px-4 text-sm font-semibold text-accent-dark transition-colors after:absolute after:inset-0 after:rounded-[16px] group-hover:bg-accent-dark group-hover:text-white sm:self-auto"
@@ -144,7 +144,7 @@ const schema = [
       {faqs.map((f) => (
         <div>
           <h3 class="text-lg">{f.q}</h3>
-          <p class="mt-1 text-base leading-7 text-ink-soft">{f.a}</p>
+          <p class="mt-1 text-base leading-[1.55] text-ink-soft sm:leading-7">{f.a}</p>
         </div>
       ))}
     </div>

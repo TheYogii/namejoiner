@@ -51,7 +51,7 @@
 
 @layer components {
   /* Body text spans the full content width, so from lg up it gets a little more size and line height to keep the long lines readable. */
-  .prose-body p { @apply text-base leading-[1.65] text-ink-soft sm:leading-7 lg:text-[1.0625rem] lg:leading-8; }
+  .prose-body p { @apply text-base leading-[1.55] text-ink-soft sm:leading-7 lg:text-[1.0625rem] lg:leading-8; }
   .prose-body li { @apply lg:leading-8; }
   .prose-body p + p { @apply mt-4; }
   .prose-body a, .link { @apply text-accent-dark underline underline-offset-4 decoration-accent/40 hover:decoration-accent-dark; }
