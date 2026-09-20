@@ -1,6 +1,6 @@
 # NameJoiner
 
-A hub of free name-combining and name-generating tools, built to rank on Google and monetise later through ads and affiliate links. Site: `https://namejoiner.com`. Deploy target: Vercel.
+A hub of free name-combining and name-generating tools, built to rank on Google and monetise later through ads and affiliate links. Site: `https://namejoiner.com`. Deploy target: Cloudflare (served by Cloudflare; see `public/_headers`).
 
 > **Read `AGENTS.md` first.** `CLAUDE.md` is a symlink to it. It holds the non-negotiable SEO rules, the content rules and the per-tool colour-theme table. This README describes the *current state*; `AGENTS.md` describes the *rules*.
 
@@ -32,7 +32,8 @@ npm run preview
 ```
 
 - `astro.config.mjs`: `site`, `trailingSlash: 'never'`, `build.format: 'file'`, Preact, sitemap (filters out 404 and the placeholder pages), Tailwind via the Vite plugin.
-- `vercel.json`: `cleanUrls: true`, `trailingSlash: false`, so `/x` and `/x.html` cannot both exist.
+- `vercel.json`: a leftover from an earlier plan to deploy on Vercel. The live site is served by Cloudflare, which does its own URL normalisation (`/x/` and `/x.html` redirect to `/x`), so this file has no effect.
+- `public/_headers`: Cloudflare caching and security headers (immutable cache for `/_astro/*`, HSTS, CSP, frame and permissions policies).
 - `public/robots.txt` points at `sitemap-index.xml`. `public/og-default.png` is a simple generated placeholder.
 - `.env.example`: optional `PUBLIC_REGISTRAR_AFFILIATE_TEMPLATE` (see Open items).
 

@@ -27,7 +27,7 @@ Consult these guides before working on related tasks:
 
 ## Stack
 - Astro (latest), Tailwind CSS v4
-- Deploy target: Vercel
+- Deploy target: Cloudflare (the live site is served by Cloudflare; `public/_headers` sets caching and security headers). Not Vercel: `vercel.json` is a leftover and is not what serves the site.
 - Follow the Vercel design guidelines and Astro Docs MCP server conventions already loaded in this project
 
 ## Site purpose

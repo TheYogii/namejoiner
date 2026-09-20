@@ -4,14 +4,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const title = 'Privacy Policy: How NameJoiner Handles Your Data and Names';
 const description =
   'NameJoiner has no accounts and runs its name tools in your browser. Read what we do and do not collect, which outside sites you may visit, and how to reach us.';
-const updated = 'September 19, 2026';
+const updated = 'September 20, 2026';
 ---
 <BaseLayout title={title} description={description} path="/privacy-policy">
   <div class="mx-auto max-w-3xl px-4 pb-8 pt-12 sm:px-6 sm:pt-16">
     <h1>Privacy policy</h1>
-    <p class="mt-3 text-sm text-ink-soft">Last updated: <time datetime="2026-09-19">{updated}</time></p>
+    <p class="mt-3 text-sm text-ink-soft">Last updated: <time datetime="2026-09-20">{updated}</time></p>
     <div class="prose-body mt-5 text-lg">
-      <p>This policy explains what happens to your information when you use NameJoiner.com. The short version: there are no accounts, the names you type stay in your browser, and at the time of writing the site sets no cookies and runs no analytics or advertising.</p>
+      <p>This policy explains what happens to your information when you use NameJoiner.com. The short version: there are no accounts, the names you type stay in your browser, and the site sets no cookies. We use one cookie-free, privacy-focused analytics service (Cloudflare Web Analytics) to count visits, and we save nothing about you except the favorites you choose to keep on your own device.</p>
     </div>
 
     <article class="prose-body mt-12 space-y-10">
@@ -23,29 +23,32 @@ const updated = 'September 19, 2026';
       <section aria-labelledby="collect">
         <h2 id="collect" class="mb-3">What we collect</h2>
         <p>We do not ask you to create an account, sign in or give us an email address, and we have no forms that collect personal information. We do not knowingly collect personal data from anyone, including children.</p>
-        <p>The site is hosted on Vercel. Like almost any web host, Vercel’s servers process basic technical data to deliver pages, such as your IP address, browser type and the pages requested, and may keep it in standard server logs for security and reliability. We do not use those logs to identify you. See <a href="https://vercel.com/legal/privacy-policy" rel="noopener">Vercel’s privacy policy</a> for how they handle that data.</p>
+        <p>The site is hosted and delivered by Cloudflare. Like almost any web host and content network, Cloudflare’s servers process basic technical data to deliver pages and keep the site secure, such as your IP address, browser type and the pages requested, and may keep it in standard logs. We do not use that data to identify you. See <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare’s privacy policy</a> for how they handle it.</p>
       </section>
 
       <section aria-labelledby="cookies">
         <h2 id="cookies" class="mb-3">Cookies, analytics and local storage</h2>
-        <p>As of the date above, NameJoiner does not set cookies, does not use analytics or tracking scripts, does not show ads, and does not write to your browser’s local storage. Fonts are the ones already on your device, so no font service is contacted either.</p>
-        <p>We plan to add privacy-friendly analytics and possibly advertising in future. If we do, we will update this policy before or when that happens, describe what is collected and by whom, and add a consent choice where the law requires one.</p>
+        <p><strong class="text-ink">Cookies.</strong> NameJoiner does not set cookies, and it does not show ads. Fonts are the ones already on your device, so no font service is contacted either.</p>
+        <p><strong class="text-ink">Analytics.</strong> We use <a href="https://www.cloudflare.com/web-analytics/" rel="noopener">Cloudflare Web Analytics</a> to see, in aggregate, which pages are visited, where visitors come from (for example a search engine), and roughly what country, browser and device they use, plus how quickly pages load. Cloudflare states that this service does not use cookies or localStorage to collect its metrics and does not “fingerprint” individuals through their IP address, browser details or other data. It does not record query strings. The reports we see are totals and averages, not profiles of individual people, and we do not combine them with anything else. Because it works this way, we do not show a cookie banner for it.</p>
+        <p><strong class="text-ink">Local storage.</strong> The only thing NameJoiner stores in your browser is the results you choose to save with the bookmark button. They are kept in your browser’s local storage, on your device, so they are still there after a refresh. They are not sent to us or anyone else. Use “Clear saved” or clear your browser’s site data to remove them. If your browser blocks local storage, saving is simply turned off.</p>
+        <p>If we add advertising or other analytics in future, we will update this policy first or at the same time, say what is collected and by whom, and add a consent choice where the law requires one.</p>
       </section>
 
       <section aria-labelledby="links">
         <h2 id="links" class="mb-3">Links to other sites</h2>
         <p>Some results offer a link to check whether a name is available elsewhere: a domain search on Namecheap, or a profile page on Instagram, TikTok, Snapchat or X. Those links open in another site only when you click them, and the name you chose becomes part of that address, so the other site will see it. Those sites have their own privacy policies and we do not control them.</p>
+        <p>If you use Share, your saved names and a link to the tool go to the app or site you pick, such as your phone’s share sheet, WhatsApp, X, Facebook or your email app, and only after you choose it. The Download card button draws an image on your own device and never uploads it. The listen button uses your browser’s built-in speech feature; on some devices its voices are provided by your operating system or browser vendor, and NameJoiner itself sends nothing.</p>
         <p>The Business Name Generator’s domain links may become affiliate links in future. If they do, they will be labeled, and the registrar may set its own cookies once you arrive on its site. It will not cost you anything extra.</p>
       </section>
 
       <section aria-labelledby="rights">
         <h2 id="rights" class="mb-3">Your rights</h2>
-        <p>Because we hold no personal data about you, there is generally nothing for us to access, correct or delete. If you are in a region with data protection laws such as the GDPR or the CCPA and believe we hold something about you, write to us and we will look into it and answer.</p>
+        <p>Because we do not collect personal data about you, and the analytics we use does not identify individuals, there is generally nothing for us to access, correct or delete. If you are in a region with data protection laws such as the GDPR or the CCPA and believe we hold something about you, write to us and we will look into it and answer.</p>
       </section>
 
       <section aria-labelledby="changes">
         <h2 id="changes" class="mb-3">Changes to this policy</h2>
-        <p>When we change this policy, we will update the date at the top of this page. Material changes, such as adding analytics or ads, will be reflected here at the same time.</p>
+        <p>When we change this policy, we will update the date at the top of this page. Material changes, such as adding advertising or different analytics, will be reflected here at the same time.</p>
       </section>
 
       <section aria-labelledby="ask">

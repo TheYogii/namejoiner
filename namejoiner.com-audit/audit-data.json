@@ -1,0 +1,229 @@
+{
+ "summary": {
+  "health_score": 84,
+  "business_type": "Free web tools hub (utility, ads/affiliate planned)",
+  "top_findings": [
+   "Privacy Policy says no analytics, but Cloudflare Web Analytics is loaded",
+   "Privacy Policy/Terms say hosted on Vercel; site is served by Cloudflare",
+   "Cloudflare email obfuscation hides hello@namejoiner.com and emits 404 /cdn-cgi/l/email-protection links",
+   "logo.png (46.8 KB, 1562x781) is ~74% of light-page weight, displayed at 72-96px",
+   "Hashed /_astro assets cached 4h instead of immutable; HTML not edge-cached"
+  ],
+  "quick_wins": [
+   "Fix Privacy Policy wording",
+   "Disable Cloudflare Email Obfuscation",
+   "Swap logo.png for SVG/WebP",
+   "Add public/_headers (caching + security)",
+   "Re-export OG image at 1200x630"
+  ]
+ },
+ "categories": [
+  {
+   "name": "Technical SEO",
+   "score": 82,
+   "what_works": [
+    "robots + sitemap correct",
+    "clean 301/308 redirects",
+    "real 404",
+    "self canonicals, Brotli"
+   ],
+   "findings": [
+    {
+     "title": "Email obfuscation emits 404 links",
+     "severity": "High",
+     "description": "/cdn-cgi/l/email-protection#... returns 404 to crawlers on 25+ pages; hello@ shows as [email protected] without JS",
+     "recommendation": "Disable Email Address Obfuscation in Cloudflare Scrape Shield"
+    },
+    {
+     "title": "Missing security headers",
+     "severity": "Medium",
+     "description": "No HSTS, CSP, X-Frame-Options, Permissions-Policy",
+     "recommendation": "Add public/_headers and enable HSTS in Cloudflare"
+    },
+    {
+     "title": "Short asset cache",
+     "severity": "Medium",
+     "description": "/_astro/* max-age=14400, must-revalidate",
+     "recommendation": "Cache-Control: public, max-age=31536000, immutable"
+    },
+    {
+     "title": "Sitemap has no lastmod",
+     "severity": "Low",
+     "description": "Only <loc> entries; unused news/image/video namespaces",
+     "recommendation": "Add lastmod"
+    }
+   ]
+  },
+  {
+   "name": "Content Quality",
+   "score": 86,
+   "what_works": [
+    "800+ words on all tool pages",
+    "distinct sections and useful FAQs",
+    "honest limits stated"
+   ],
+   "findings": [
+    {
+     "title": "Privacy Policy inaccurate",
+     "severity": "High",
+     "description": "States no analytics and Vercel hosting; live site runs Cloudflare Web Analytics on Cloudflare hosting",
+     "recommendation": "Rewrite the analytics and hosting sections"
+    },
+    {
+     "title": "No named maker or review date",
+     "severity": "Medium",
+     "description": "About and guides have no author/organisation or last-reviewed date",
+     "recommendation": "Add a named maker and real dates"
+    }
+   ]
+  },
+  {
+   "name": "On-Page SEO",
+   "score": 92,
+   "what_works": [
+    "unique titles 52-58 chars",
+    "descriptions 141-160",
+    "one H1, no heading skips",
+    "OG/Twitter on all pages"
+   ],
+   "findings": [
+    {
+     "title": "Footer headings are H2",
+     "severity": "Low",
+     "description": "'Tools' and 'NameJoiner' appear as H2 on every page",
+     "recommendation": "Use non-heading markup"
+    }
+   ]
+  },
+  {
+   "name": "Schema",
+   "score": 80,
+   "what_works": [
+    "valid JSON-LD",
+    "FAQPage matches visible FAQs",
+    "WebApplication on tool pages"
+   ],
+   "findings": [
+    {
+     "title": "No Organization entity",
+     "severity": "Medium",
+     "description": "No Organization/logo/publisher in schema",
+     "recommendation": "Add Organization and reference as publisher"
+    },
+    {
+     "title": "FAQ rich results restricted",
+     "severity": "Info",
+     "description": "Google limits FAQ rich results to authoritative sites",
+     "recommendation": "Keep for semantics; expect no SERP feature"
+    }
+   ]
+  },
+  {
+   "name": "Performance",
+   "score": 90,
+   "what_works": [
+    "CLS 0",
+    "LCP is text, 0.7-2.0s lab",
+    "28-34KB tool JS, lazily hydrated"
+   ],
+   "findings": [
+    {
+     "title": "HTML not edge-cached",
+     "severity": "Medium",
+     "description": "cf-cache-status DYNAMIC, max-age=0; TTFB 230-650ms (one 1.7s)",
+     "recommendation": "Edge-cache static HTML"
+    }
+   ]
+  },
+  {
+   "name": "AI Search Readiness",
+   "score": 72,
+   "what_works": [
+    "all crawlers allowed",
+    "question-style headings with self-contained answers"
+   ],
+   "findings": [
+    {
+     "title": "Weak trust and entity signals",
+     "severity": "Medium",
+     "description": "No author/organisation, no Organization schema, no external brand mentions yet",
+     "recommendation": "Add named maker, Organization schema, dated reviews"
+    },
+    {
+     "title": "No llms.txt",
+     "severity": "Low",
+     "description": "404",
+     "recommendation": "Optional"
+    }
+   ]
+  },
+  {
+   "name": "Images",
+   "score": 70,
+   "what_works": [
+    "alt text, dimensions, lazy footer logo",
+    "no CLS"
+   ],
+   "findings": [
+    {
+     "title": "Oversized logo",
+     "severity": "Medium",
+     "description": "logo.png 1562x781 46.8KB shown at 72-96px",
+     "recommendation": "SVG or ~300px WebP"
+    },
+    {
+     "title": "Oversized OG image",
+     "severity": "Medium",
+     "description": "og-default.png 3750x1969 164KB, shared by all pages",
+     "recommendation": "1200x630 under ~100KB; per-tool images"
+    }
+   ]
+  }
+ ],
+ "action_plan": {
+  "phases": [
+   {
+    "name": "Phase 1: Critical Fixes",
+    "timeframe": "Week 1",
+    "items": [
+     "Correct Privacy Policy (analytics, host, local storage, sharing)",
+     "Disable Cloudflare Email Obfuscation"
+    ]
+   },
+   {
+    "name": "Phase 2: High-Impact Improvements",
+    "timeframe": "Weeks 2-3",
+    "items": [
+     "Replace logo.png",
+     "Add _headers (cache + security), HSTS",
+     "Re-export OG image",
+     "Edge-cache HTML",
+     "Add Organization schema",
+     "Name the maker + review dates"
+    ]
+   },
+   {
+    "name": "Phase 3: Content & Authority",
+    "timeframe": "Month 2",
+    "items": [
+     "Footer heading markup",
+     "Sitemap lastmod",
+     "Neutral hero button label",
+     "Optional llms.txt / security.txt"
+    ]
+   },
+   {
+    "name": "Phase 4: Monitoring & Iteration",
+    "timeframe": "Ongoing",
+    "items": [
+     "Search Console + CrUX",
+     "Re-run audit"
+    ]
+   }
+  ]
+ },
+ "artifacts": {
+  "findings_dir": "findings/",
+  "screenshots_dir": "screenshots/"
+ }
+}

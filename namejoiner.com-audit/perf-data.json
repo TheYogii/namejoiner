@@ -1,0 +1,255 @@
+{
+ "home-mobile": {
+  "lcp": {
+   "t": 1860,
+   "el": "P.mt-5",
+   "size": 30876
+  },
+  "cls": 0,
+  "longTasks": [
+   463,
+   230,
+   106
+  ],
+  "tbtApprox": 649,
+  "ttfb": 647,
+  "dcl": 2179,
+  "load": 2196,
+  "reqs": 5,
+  "docKB": 8,
+  "jsKB": 0,
+  "cssKB": 8,
+  "imgKB": 46,
+  "totalKB": 62,
+  "resources": [
+   "/_astro/BaseLayout.ByiYdIsX.css 8KB",
+   "/logo.png 46KB",
+   "https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495 0KB",
+   "/cdn-cgi/rum? 0KB"
+  ]
+ },
+ "home-desktop": {
+  "lcp": {
+   "t": 912,
+   "el": "P.mt-5",
+   "size": 57452
+  },
+  "cls": 0,
+  "longTasks": [],
+  "tbtApprox": 0,
+  "ttfb": 619,
+  "dcl": 891,
+  "load": 892,
+  "reqs": 5,
+  "docKB": 8,
+  "jsKB": 0,
+  "cssKB": 8,
+  "imgKB": 46,
+  "totalKB": 62,
+  "resources": [
+   "/_astro/BaseLayout.ByiYdIsX.css 8KB",
+   "/logo.png 46KB",
+   "https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495 0KB",
+   "/cdn-cgi/rum? 0KB"
+  ]
+ },
+ "couple-mobile": {
+  "lcp": {
+   "t": 924,
+   "el": "P",
+   "size": 83248
+  },
+  "cls": 0,
+  "longTasks": [
+   64,
+   51,
+   94
+  ],
+  "tbtApprox": 59,
+  "ttfb": 583,
+  "dcl": 1219,
+  "load": 1221,
+  "reqs": 17,
+  "docKB": 15,
+  "jsKB": 28,
+  "cssKB": 8,
+  "imgKB": 46,
+  "totalKB": 98,
+  "resources": [
+   "/_astro/BaseLayout.ByiYdIsX.css 8KB",
+   "/logo.png 46KB",
+   "https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495 0KB",
+   "/cdn-cgi/rum? 0KB",
+   "/_astro/CombinerTool.Bg4zMHqN.js 3KB",
+   "/_astro/client.zkTbwNei.js 2KB",
+   "/_astro/preact.module.CEGzOhZf.js 5KB",
+   "/_astro/hooks.module.Ckc4XTZN.js 1KB",
+   "/_astro/combine.Bb19Fapj.js 11KB",
+   "/_astro/combine.j4gzhfmf.js 1KB",
+   "/_astro/couple.BBUWnQma.js 2KB",
+   "/_astro/funnel-x.DDkc1qzF.js 1KB",
+   "/_astro/heart.sLWMBUG9.js 0KB",
+   "/_astro/minus.DFqgCnn1.js 1KB"
+  ]
+ },
+ "couple-desktop": {
+  "lcp": {
+   "t": 2028,
+   "el": "P",
+   "size": 128064
+  },
+  "cls": 0,
+  "longTasks": [],
+  "tbtApprox": 0,
+  "ttfb": 1716,
+  "dcl": 2030,
+  "load": 2060,
+  "reqs": 17,
+  "docKB": 15,
+  "jsKB": 28,
+  "cssKB": 8,
+  "imgKB": 46,
+  "totalKB": 98,
+  "resources": [
+   "/_astro/BaseLayout.ByiYdIsX.css 8KB",
+   "/logo.png 46KB",
+   "https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495 0KB",
+   "/_astro/CombinerTool.Bg4zMHqN.js 3KB",
+   "/_astro/client.zkTbwNei.js 2KB",
+   "/cdn-cgi/rum? 0KB",
+   "/_astro/preact.module.CEGzOhZf.js 5KB",
+   "/_astro/hooks.module.Ckc4XTZN.js 1KB",
+   "/_astro/combine.Bb19Fapj.js 11KB",
+   "/_astro/combine.j4gzhfmf.js 1KB",
+   "/_astro/couple.BBUWnQma.js 2KB",
+   "/_astro/funnel-x.DDkc1qzF.js 1KB",
+   "/_astro/heart.sLWMBUG9.js 0KB",
+   "/_astro/minus.DFqgCnn1.js 1KB"
+  ]
+ },
+ "username-mobile": {
+  "lcp": {
+   "t": 1204,
+   "el": "P",
+   "size": 100156
+  },
+  "cls": 0,
+  "longTasks": [
+   58,
+   64
+  ],
+  "tbtApprox": 22,
+  "ttfb": 789,
+  "dcl": 1386,
+  "load": 1544,
+  "reqs": 16,
+  "docKB": 15,
+  "jsKB": 34,
+  "cssKB": 8,
+  "imgKB": 46,
+  "totalKB": 104,
+  "resources": [
+   "/_astro/BaseLayout.ByiYdIsX.css 8KB",
+   "/logo.png 46KB",
+   "https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495 0KB",
+   "/cdn-cgi/rum? 0KB",
+   "/_astro/UsernameTool.Bh9qJiVK.js 3KB",
+   "/_astro/client.zkTbwNei.js 2KB",
+   "/_astro/preact.module.CEGzOhZf.js 5KB",
+   "/_astro/combine.Bb19Fapj.js 11KB",
+   "/_astro/platforms.DO4m5blx.js 7KB",
+   "/_astro/couple.BBUWnQma.js 2KB",
+   "/_astro/funnel-x.DDkc1qzF.js 1KB",
+   "/_astro/sparkles.Dk4kEnSm.js 1KB",
+   "/_astro/hooks.module.Ckc4XTZN.js 1KB",
+   "/_astro/wand-sparkles.CD5_esA0.js 1KB"
+  ]
+ },
+ "username-desktop": {
+  "lcp": {
+   "t": 864,
+   "el": "P",
+   "size": 127716
+  },
+  "cls": 0,
+  "longTasks": [],
+  "tbtApprox": 0,
+  "ttfb": 427,
+  "dcl": 1587,
+  "load": 1587,
+  "reqs": 16,
+  "docKB": 15,
+  "jsKB": 34,
+  "cssKB": 8,
+  "imgKB": 46,
+  "totalKB": 104,
+  "resources": [
+   "/_astro/BaseLayout.ByiYdIsX.css 8KB",
+   "/logo.png 46KB",
+   "https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495 0KB",
+   "/_astro/UsernameTool.Bh9qJiVK.js 3KB",
+   "/_astro/client.zkTbwNei.js 2KB",
+   "/_astro/preact.module.CEGzOhZf.js 5KB",
+   "/_astro/combine.Bb19Fapj.js 11KB",
+   "/_astro/couple.BBUWnQma.js 2KB",
+   "/_astro/platforms.DO4m5blx.js 7KB",
+   "/_astro/funnel-x.DDkc1qzF.js 1KB",
+   "/_astro/sparkles.Dk4kEnSm.js 1KB",
+   "/cdn-cgi/rum? 0KB",
+   "/_astro/hooks.module.Ckc4XTZN.js 1KB",
+   "/_astro/wand-sparkles.CD5_esA0.js 1KB"
+  ]
+ },
+ "about-mobile": {
+  "lcp": {
+   "t": 1932,
+   "el": "P",
+   "size": 74431
+  },
+  "cls": 0,
+  "longTasks": [
+   81
+  ],
+  "tbtApprox": 31,
+  "ttfb": 1252,
+  "dcl": 2101,
+  "load": 2103,
+  "reqs": 5,
+  "docKB": 6,
+  "jsKB": 0,
+  "cssKB": 8,
+  "imgKB": 46,
+  "totalKB": 61,
+  "resources": [
+   "/_astro/BaseLayout.ByiYdIsX.css 8KB",
+   "/logo.png 46KB",
+   "https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495 0KB",
+   "/cdn-cgi/rum? 0KB"
+  ]
+ },
+ "about-desktop": {
+  "lcp": {
+   "t": 672,
+   "el": "P",
+   "size": 106560
+  },
+  "cls": 0,
+  "longTasks": [],
+  "tbtApprox": 0,
+  "ttfb": 443,
+  "dcl": 654,
+  "load": 655,
+  "reqs": 5,
+  "docKB": 6,
+  "jsKB": 0,
+  "cssKB": 8,
+  "imgKB": 46,
+  "totalKB": 61,
+  "resources": [
+   "/_astro/BaseLayout.ByiYdIsX.css 8KB",
+   "/logo.png 46KB",
+   "https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495 0KB",
+   "/cdn-cgi/rum? 0KB"
+  ]
+ }
+}

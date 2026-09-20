@@ -25,7 +25,19 @@ const {
 const site = 'https://namejoiner.com';
 const canonical = new URL(path === '/' ? '/' : path.replace(/\/$/, ''), site).href;
 const image = new URL(ogImage, site).href;
-const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+const ORG_ID = `${site}/#organization`;
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': ORG_ID,
+  name: 'NameJoiner',
+  url: `${site}/`,
+  logo: { '@type': 'ImageObject', url: `${site}/android-chrome-512x512.png`, width: 512, height: 512 },
+};
+// WebSite and WebApplication entities name the Organization as their publisher, so the brand is one connected entity across the site.
+const withPublisher = (s: Record<string, unknown>) =>
+  s['@type'] === 'WebSite' || s['@type'] === 'WebApplication' ? { ...s, publisher: { '@id': ORG_ID } } : s;
+const schemas = [organization, ...(schema ? (Array.isArray(schema) ? schema : [schema]) : []).map(withPublisher)];
 ---
 <!doctype html>
 <html lang="en">
@@ -50,8 +62,8 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={image} />
-    <meta property="og:image:width" content="3750" />
-    <meta property="og:image:height" content="1969" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={ogImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
