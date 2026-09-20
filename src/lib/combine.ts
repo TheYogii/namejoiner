@@ -371,7 +371,7 @@ export function generatePool(name1: string, name2: string, { keep, minPool = FLO
 const bucketOf = (len: number): Exclude<Style, 'all'> => (len <= 5 ? 'short' : len <= 8 ? 'medium' : 'long');
 const TARGET: Record<Exclude<Style, 'all'>, number> = { short: 4, medium: 7, long: 10 };
 
-/** Picks 12-20 results for the chosen length style, varied across techniques. */
+/** Picks 12-30 results for the chosen length style, varied across techniques (fewer when the pair cannot support that many at the quality bar). */
 /** Optional lane weights: the biggest nudge leads each round, and 3 or more earns an extra pick. Empty means no change. */
 export type TechniqueNudges = Partial<Record<Technique, number>>;
 

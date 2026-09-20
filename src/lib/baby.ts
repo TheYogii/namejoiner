@@ -137,7 +137,7 @@ export function babyResults(pool: Combo[], parent1: string, parent2: string, opt
   candidates = rerankForSiblings(candidates, opts.siblings);
   candidates = applyLean(candidates, opts.lean);
 
-  const picked = pickResults(candidates, 'all');
+  const picked = pickResults(candidates, 'all', 30, MIN_RESULTS);
   // With sibling matching on, lead with the closest matches instead of technique variety.
   if (opts.siblings.length) picked.sort((p, q) => q.score - p.score);
 

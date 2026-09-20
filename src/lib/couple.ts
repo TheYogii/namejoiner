@@ -166,8 +166,11 @@ export function buildCouplePool(name1: string, name2: string, vibe: Vibe, extraK
   });
 }
 
-/** Picks 12-20 results for a length filter, leading with the techniques the vibe favors. */
+/**
+ * Picks up to 30 results for a length filter (12 at the least when the pair allows), leading with the techniques the vibe favors.
+ * Cute stays at 20: past that its extra results are just more -ie and -y endings on the same few stems (Jammy, Jammie, Jamie).
+ */
 export function pickCouple(pool: CoupleResult[], style: Style, vibe: Vibe): CoupleResult[] {
-  return pickResults(pool, style, 20, 12, vibe === 'any' ? {} : RULES[vibe].nudges) as CoupleResult[];
+  return pickResults(pool, style, vibe === 'cute' ? 20 : 30, 12, vibe === 'any' ? {} : RULES[vibe].nudges) as CoupleResult[];
 }
 

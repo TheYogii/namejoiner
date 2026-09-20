@@ -76,7 +76,7 @@ export default function NicknameTool() {
   function generate(forName: string, forStyle: NicknameStyle, forAudience: Audience, forFormat: NicknameFormat = format, forTrait: string = snapTrait) {
     const kidProblem = kidTraitProblem(forTrait, forAudience);
     setErrTrait(kidProblem);
-    const next = generateNicknames(forName, forStyle, 20, forAudience, { format: forFormat, trait: kidProblem ? '' : forTrait });
+    const next = generateNicknames(forName, forStyle, 28, forAudience, { format: forFormat, trait: kidProblem ? '' : forTrait });
     setResults(next);
     setRun((r) => r + 1);
     const who = forAudience === 'anyone' ? '' : ` for ${AUDIENCE_LABEL[forAudience].toLowerCase()}`;

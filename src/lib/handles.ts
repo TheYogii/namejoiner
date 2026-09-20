@@ -60,6 +60,10 @@ export const TECHNIQUE_LABEL: Record<HandleTechnique, string> = {
   twist: 'Spelling twist',
 };
 
+/** Results per generation. The word lists hold enough distinct words to fill this without leaning on one word repeatedly. */
+const DEFAULT_COUNT = 30;
+/** Most Word-pairing results that may reuse the same list word (luna_honey and honey_luna count as two), so one word never fills the list. */
+const PAIR_PER_WORD = 2;
 const DEFAULT_MAX_LENGTH = 30;
 const DEFAULT_IDEAL_LENGTH = 15;
 const MIN_PRONOUNCEABILITY = 60;
@@ -129,11 +133,12 @@ export function evaluateHandle(name: string, base: string, config: StyleConfig, 
 }
 
 /** Builds up to `count` handles for one base word from a style's lists, best-first and varied across techniques. */
-export function buildHandles(rawBase: string, config: StyleConfig, { count = 20, random = null, constraints = {} }: GenerateOptions = {}): Handle[] {
+export function buildHandles(rawBase: string, config: StyleConfig, { count = DEFAULT_COUNT, random = null, constraints = {} }: GenerateOptions = {}): Handle[] {
   const base = toHandleBase(rawBase);
   if (base.length < 2) return [];
 
   const found = new Map<string, Handle>();
+  const pairWord = new Map<string, string>();
   const add = (name: string, technique: HandleTechnique, bonus = 0) => {
     if (found.has(name)) return;
     const base_ = evaluateHandle(name, base, config, constraints);
@@ -148,6 +153,8 @@ export function buildHandles(rawBase: string, config: StyleConfig, { count = 20,
       for (const sep of config.separators) {
         add(b + sep + w, 'pair', sep ? 4 : 0);
         add(w + sep + b, 'pair', sep ? 4 : 0);
+        pairWord.set(b + sep + w, w);
+        pairWord.set(w + sep + b, w);
       }
     }
     if (config.blends) {
@@ -179,9 +186,20 @@ export function buildHandles(rawBase: string, config: StyleConfig, { count = 20,
 
   const picked: Handle[] = [];
   const cursor = lanes.map(() => 0);
+  const pairUses = new Map<string, number>();
+  const pairIndex = order.indexOf('pair');
   while (picked.length < count && lanes.some((l, i) => cursor[i] < l.items.length)) {
     lanes.forEach((lane, i) => {
-      for (let n = 0; n < lane.picks && picked.length < count && cursor[i] < lane.items.length; n++) picked.push(lane.items[cursor[i]++]);
+      for (let n = 0; n < lane.picks && picked.length < count && cursor[i] < lane.items.length; n++) {
+        const item = lane.items[cursor[i]++];
+        if (i === pairIndex) {
+          const word = pairWord.get(item.name) ?? item.name;
+          const used = pairUses.get(word) ?? 0;
+          if (used >= PAIR_PER_WORD) { n--; continue; }
+          pairUses.set(word, used + 1);
+        }
+        picked.push(item);
+      }
     });
   }
   return picked;

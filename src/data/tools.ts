@@ -14,7 +14,7 @@ export interface Tool {
 export const tools: Tool[] = [
   { slug: 'couple-name-combiner', name: 'Couple Name Combiner', short: 'Couple Names', theme: 'couple', icon: 'heart', built: true,
     description: 'Blend two names into a ship name for you and your partner.' },
-  { slug: 'baby-name-combiner', name: 'Baby Name Combiner', theme: 'baby', icon: 'baby', built: true,
+  { slug: 'baby-name-combiner', name: 'Baby Name Combiner', short: 'Baby Names', theme: 'baby', icon: 'baby', built: true,
     description: 'Mix both parents’ names into fresh baby name ideas.' },
   { slug: 'business-name-generator', name: 'Business Name Generator', theme: 'business', icon: 'briefcase', built: true,
     description: 'Combine words into brandable business and startup names.' },
@@ -32,7 +32,7 @@ export const toolBySlug = (slug: string) => tools.find((t) => t.slug === slug)!;
  * Tools shown as direct links in the header, in this order. Every other tool goes in the "More Tools" dropdown,
  * so a new tool needs no header change: it lands in the dropdown, and can be promoted by adding its slug here.
  */
-export const primaryNavSlugs = ['couple-name-combiner', 'gamertag-generator', 'username-generator'];
+export const primaryNavSlugs = ['couple-name-combiner', 'baby-name-combiner', 'gamertag-generator'];
 
 export const primaryTools: Tool[] = primaryNavSlugs.map((slug) => toolBySlug(slug));
 export const moreTools: Tool[] = tools.filter((t) => !primaryNavSlugs.includes(t.slug));

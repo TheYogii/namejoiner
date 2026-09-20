@@ -259,7 +259,7 @@ const isAdultLeaning = (text: string) => /^(sir |big )/i.test(text);
 const isPetShaped = (text: string) => !/[\s\-.]/.test(text) && text.replace(/[^\p{L}]/gu, '').length <= 6 && syllabify(text.toLowerCase()).length <= 2;
 
 /** Builds up to `count` nicknames for one name in one style, best-first and varied across techniques. */
-export function generateNicknames(rawName: string, style: NicknameStyle, count = 20, audience: Audience = 'anyone', options: NicknameOptions = {}): Nickname[] {
+export function generateNicknames(rawName: string, style: NicknameStyle, count = 28, audience: Audience = 'anyone', options: NicknameOptions = {}): Nickname[] {
   const name = normalize(rawName);
   const key = name.toLowerCase();
   const all = stems(key);

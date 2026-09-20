@@ -96,13 +96,13 @@ function pickCompound(list: (BizResult & { group: string })[], max: number): Biz
 export function businessPool(word1: string, word2: string): BizPool {
   const inputs = new Set([word1, word2].map((w) => normalize(w).toLowerCase()));
   const compound = compoundNames(word1, word2).filter((c) => !inputs.has(c.name.toLowerCase()));
-  return { brandable: brandableBlends(word1, word2), compound: pickCompound(compound, 20) };
+  return { brandable: brandableBlends(word1, word2), compound: pickCompound(compound, 24) };
 }
 
 const len = (r: BizResult) => letters(r.name).length;
 
-/** Picks 12-20 results for a style: Short (4-6 letters), Brandable (5+ letter blends) or Compound. */
-export function pickBusiness(pool: BizPool, style: BizStyle, max = 20, min = 12): BizResult[] {
+/** Picks up to 24 results for a style: Short (4-6 letters), Brandable (5+ letter blends) or Compound. */
+export function pickBusiness(pool: BizPool, style: BizStyle, max = 24, min = 12): BizResult[] {
   const blends = (list: BizResult[], count: number) => pickResults(list as Combo[], 'all', count, Math.min(min, count)) as BizResult[];
 
   if (style === 'compound') return pool.compound.slice(0, max);
