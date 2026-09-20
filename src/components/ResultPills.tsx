@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { Copy, Check, Globe, ExternalLink, Bookmark, Share2, MessageCircle, Send, Mail, Users, X, Volume2 } from 'lucide-preact';
+import { Copy, Check, Globe, ExternalLink, Bookmark, Share2, MessageCircle, Send, Mail, Users, X, Volume2, Download } from 'lucide-preact';
 import { copyText } from '../lib/clipboard';
 import type { Saved } from './saved';
 import { canSpeak, speak, stopIfCurrent } from './speak';
+import { downloadCard } from './card';
 
 export interface PillItem {
   key: string;
@@ -167,11 +168,14 @@ function buildShare(tool: string, items: PillItem[]) {
   const names = items.slice(0, MAX_SHARED_NAMES).map((i) => i.label);
   const more = items.length - names.length;
   const url = `${SITE}${info.path}`;
-  const text = `My favorite ${info.noun} from NameJoiner: ${names.join(', ')}${more > 0 ? ` and ${more} more` : ''}`;
-  return { text, url, block: `${text}\n${url}`, subject: `My favorite ${info.noun} from NameJoiner` };
+  const intro = `My favorite ${info.noun} from NameJoiner:`;
+  const list = `${names.join(', ')}${more > 0 ? ` and ${more} more` : ''}`;
+  // Intro line, the names on their own line, a blank line, then the link. Every channel that carries text uses this block as is.
+  const block = `${intro}\n${list}\n\n${url}`;
+  return { url, block, subject: `My favorite ${info.noun} from NameJoiner` };
 }
 
-const shareLinkClass = 'inline-flex min-h-9 items-center gap-1.5 rounded-full px-3 text-sm font-medium text-accent-dark hover:bg-accent-bg';
+const shareLinkClass = 'inline-flex min-h-9 items-center gap-1.5 whitespace-nowrap rounded-full px-3 text-sm font-medium text-accent-dark hover:bg-accent-bg';
 const optionClass = 'inline-flex min-h-11 items-center gap-2 rounded-full border border-line bg-white px-4 text-sm font-medium text-accent-dark hover:border-accent hover:bg-accent-bg';
 
 /** The "Saved results" section. It renders nothing until something is saved, and it does not depend on a search having been run. */
@@ -179,6 +183,8 @@ export function SavedResults({ saved, announce, tool }: { saved: Saved; announce
   const [copied, setCopied] = useState(false);
   const timer = useRef<number>();
   const dialog = useRef<HTMLDialogElement>(null);
+  const section = useRef<HTMLElement>(null);
+  const [makingCard, setMakingCard] = useState(false);
   const shareButton = useRef<HTMLButtonElement>(null);
   if (!saved.available || saved.items.length === 0) return null;
 
@@ -208,7 +214,9 @@ export function SavedResults({ saved, announce, tool }: { saved: Saved; announce
     // Native share sheet where the browser has one (mostly phones and tablets); otherwise the dialog with copy and quick-share options.
     if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
       try {
-        await navigator.share({ title: share.subject, text: share.text, url: share.url });
+        // One text field holding the names and the link. A separate `url` field is what some share targets (notably iOS Messages and
+        // several Android apps) use on its own, dropping `text`, which sent only the link.
+        await navigator.share({ title: share.subject, text: share.block });
         return;
       } catch (e) {
         // Closing the share sheet without choosing anything is not an error.
@@ -217,6 +225,24 @@ export function SavedResults({ saved, announce, tool }: { saved: Saved; announce
       }
     }
     openDialog();
+  }
+
+  async function onDownloadCard() {
+    if (makingCard || !section.current) return;
+    setMakingCard(true);
+    try {
+      await downloadCard({
+        noun: SHARE_INFO[tool].noun,
+        slug: SHARE_INFO[tool].path.slice(1),
+        names: saved.items.map((i) => i.label),
+        themeSource: section.current,
+      });
+      announce('Your card was downloaded.');
+    } catch {
+      announce('Could not create the card in this browser. Try Share or Copy instead.');
+    } finally {
+      setMakingCard(false);
+    }
   }
 
   async function onCopyShare() {
@@ -229,18 +255,22 @@ export function SavedResults({ saved, announce, tool }: { saved: Saved; announce
   }
 
   return (
-    <section class="mt-8 border-t border-line pt-6" aria-labelledby="saved-heading">
+    <section ref={section} class="mt-8 border-t border-line pt-6" aria-labelledby="saved-heading">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <h2 id="saved-heading" class="text-xl">Saved results</h2>
-        <div class="flex items-center gap-1">
+        <div class="flex flex-wrap items-center gap-1">
           <button ref={shareButton} type="button" onClick={onShare} aria-haspopup="dialog" class={shareLinkClass}>
             <Share2 size={16} strokeWidth={1.75} aria-hidden="true" />
             Share
           </button>
+          <button type="button" onClick={onDownloadCard} disabled={makingCard} class={`${shareLinkClass} disabled:opacity-60`}>
+            <Download size={16} strokeWidth={1.75} aria-hidden="true" />
+            {makingCard ? 'Making card…' : 'Download card'}
+          </button>
           <button
             type="button"
             onClick={() => { saved.clear(); closeDialog(); announce('Cleared all saved results.'); }}
-            class="inline-flex min-h-9 items-center rounded-full px-3 text-sm font-medium text-accent-dark hover:bg-accent-bg"
+            class="inline-flex min-h-9 items-center whitespace-nowrap rounded-full px-3 text-sm font-medium text-accent-dark hover:bg-accent-bg"
           >
             Clear saved
           </button>
@@ -284,7 +314,7 @@ export function SavedResults({ saved, announce, tool }: { saved: Saved; announce
               <MessageCircle size={16} strokeWidth={1.75} aria-hidden="true" />
               WhatsApp<span class="sr-only"> (opens in a new tab)</span>
             </a>
-            <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(share.text)}&url=${encodeURIComponent(share.url)}`} target="_blank" rel="noopener noreferrer" class={optionClass}>
+            <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(share.block)}`} target="_blank" rel="noopener noreferrer" class={optionClass}>
               <Send size={16} strokeWidth={1.75} aria-hidden="true" />
               X<span class="sr-only"> (opens in a new tab)</span>
             </a>
@@ -292,7 +322,7 @@ export function SavedResults({ saved, announce, tool }: { saved: Saved; announce
               <Users size={16} strokeWidth={1.75} aria-hidden="true" />
               Facebook<span class="sr-only"> (opens in a new tab)</span>
             </a>
-            <a href={`mailto:?subject=${encodeURIComponent(share.subject)}&body=${encodeURIComponent(share.block)}`} class={optionClass}>
+            <a href={`mailto:?subject=${encodeURIComponent(share.subject)}&body=${encodeURIComponent(share.block.replace(/\n/g, '\r\n'))}`} class={optionClass}>
               <Mail size={16} strokeWidth={1.75} aria-hidden="true" />
               Email
             </a>
